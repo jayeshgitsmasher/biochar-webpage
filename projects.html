@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NatWorks Transformation Carbon Project Pipeline — 11 projects across Mongolia, Egypt, Côte d'Ivoire and Tanzania. Biochar CDR, soil carbon, mangroves, cookstoves and e-mobility.">
+  <meta property="og:title" content="Carbon Projects | NatWorks Transformation">
+  <title>Carbon Projects | NatWorks Transformation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── Filter bar ── */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      padding: 2rem 1rem 0;
+    }
+    .filter-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(102,187,106,0.25);
+      color: #a5d6a7;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.45rem 1.1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: background 0.22s, border-color 0.22s, color 0.22s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #2e7d32;
+      border-color: #66bb6a;
+      color: #fff;
+    }
+
+    /* ── Projects detail grid ── */
+    .projects-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.8rem;
+    }
+    @media (max-width: 900px) {
+      .projects-detail-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Project detail card ── */
+    .project-detail-card {
+      background: rgba(15,24,12,0.85);
+      border: 1px solid rgba(102,187,106,0.18);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.28s, box-shadow 0.28s, opacity 0.35s;
+      position: relative;
+    }
+    .project-detail-card.hidden {
+      display: none;
+    }
+    .project-detail-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(102,187,106,0.3);
+    }
+    .project-detail-card.featured {
+      border-color: rgba(102,187,106,0.5);
+      box-shadow: 0 0 0 1px rgba(102,187,106,0.3), 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    /* card header */
+    .pdc-header {
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.2rem 1.4rem;
+      position: relative;
+    }
+    .pdc-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .pdc-id {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.55);
+      background: rgba(0,0,0,0.35);
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+    }
+    .featured-badge {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #ffd54f;
+      background: rgba(255,213,79,0.12);
+      border: 1px solid rgba(255,213,79,0.35);
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+    }
+    .pdc-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    /* card body */
+    .pdc-body {
+      padding: 1.2rem 1.4rem 1.4rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .pdc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding-bottom: 0.85rem;
+    }
+    .pdc-meta-item {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      color: #90a4ae;
+    }
+    .pdc-meta-item strong {
+      color: #b0bec5;
+      font-weight: 600;
+    }
+    .pdc-meta-item.highlight strong {
+      color: #66bb6a;
+    }
+    .pdc-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: #b0bec5;
+      flex: 1;
+    }
+    .pdc-benefits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .pdc-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #a5d6a7;
+      background: rgba(102,187,106,0.1);
+      border: 1px solid rgba(102,187,106,0.2);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+    .pdc-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .pdc-volume {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #66bb6a;
+    }
+    .pdc-volume-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      color: #78909c;
+      display: block;
+      font-weight: 400;
+    }
+    .btn-detail {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #66bb6a;
+      background: rgba(102,187,106,0.1);
+      border: 1px solid rgba(102,187,106,0.3);
+      padding: 0.4rem 0.95rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+    }
+    .btn-detail:hover {
+      background: #2e7d32;
+      color: #fff;
+      border-color: #66bb6a;
+    }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(6px);
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-box {
+      background: #0d1a10;
+      border: 1px solid rgba(102,187,106,0.3);
+      border-radius: 20px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      padding: 2.2rem;
+      animation: modalIn 0.28s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+    .modal-close {
+      position: absolute;
+      top: 1.1rem;
+      right: 1.2rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.14); }
+    #modalBody h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    #modalBody p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #b0bec5;
+      margin-bottom: 1rem;
+    }
+    #modalBody .modal-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 1.2rem;
+    }
+    #modalBody .modal-meta-item {
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+    }
+    #modalBody .modal-meta-item span:first-child {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      color: #78909c;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.15rem;
+    }
+    #modalBody .modal-meta-item span:last-child {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #e0f2e9;
+    }
+
+    /* ── No-results message ── */
+    .no-results {
+      text-align: center;
+      color: #78909c;
+      font-family: 'Inter', sans-serif;
+      padding: 3rem;
+      grid-column: 1 / -1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="logo" aria-label="NatWorks Transformation Home">
+      <!-- Inline SVG: molecular network logo -->
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="22" cy="22" r="21" stroke="rgba(102,187,106,0.2)" stroke-width="1"/>
+        <line x1="22" y1="8" x2="35" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="22" y1="8" x2="9" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="35" y1="18" x2="35" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+        <line x1="9" y1="18" x2="9" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+        <line x1="35" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="9" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="22" y1="8" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="35" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="9" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="35" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="9" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <circle cx="22" cy="8" r="3.5" fill="#66bb6a"/>
+        <circle cx="35" cy="18" r="3" fill="#2e7d32"/>
+        <circle cx="9" cy="18" r="3" fill="#2e7d32"/>
+        <circle cx="35" cy="30" r="3" fill="#66bb6a"/>
+        <circle cx="9" cy="30" r="3" fill="#66bb6a"/>
+        <circle cx="22" cy="38" r="3.5" fill="#2e7d32"/>
+        <circle cx="22" cy="22" r="4" fill="#e53935"/>
+        <circle cx="28" cy="14" r="2" fill="#e53935"/>
+      </svg>
+      <div class="logo-text">
+        <span><span class="nat">Nat</span><span class="works">Works</span></span>
+        <span class="tagline">Transformation</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="biochar.html">What is Biochar</a></li>
+      <li><a href="projects.html" aria-current="page">Projects</a></li>
+      <li><a href="index.html#impact">Impact</a></li>
+      <li><a href="index.html#methodology">Methodology</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="https://natworks.co.in/" target="_blank" rel="noopener" class="nav-cta" aria-label="Visit NatWorks main website">Visit NatWorks →</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" style="min-height: 60vh;" aria-label="Projects hero">
+    <div id="particles" class="particle-container" aria-hidden="true"></div>
+    <div class="carbon-ring-bg" aria-hidden="true">
+      <div class="carbon-ring carbon-ring-1"></div>
+      <div class="carbon-ring carbon-ring-2"></div>
+      <div class="carbon-ring carbon-ring-3"></div>
+    </div>
+    <div class="hero-content">
+      <span class="label-tag hero-animate-1">🗂️ Full Project Portfolio</span>
+      <h1 class="hero-animate-2">
+        Our Carbon <span class="animated-gradient-text">Project Pipeline</span>
+      </h1>
+      <p class="hero-animate-3">
+        Eleven carefully developed carbon projects across four countries, spanning biochar CDR, soil carbon enhancement, blue carbon, clean energy, and sustainable mobility.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== FILTER BAR ===================== -->
+  <div class="filter-bar" role="group" aria-label="Filter projects by region or type">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="mongolia">Mongolia</button>
+    <button class="filter-btn" data-filter="egypt">Egypt</button>
+    <button class="filter-btn" data-filter="cdi">Côte d'Ivoire</button>
+    <button class="filter-btn" data-filter="tanzania">Tanzania</button>
+    <button class="filter-btn" data-filter="removal">Removal</button>
+    <button class="filter-btn" data-filter="reduction">Reduction</button>
+  </div>
+
+  <!-- ===================== PROJECTS GRID ===================== -->
+  <section class="section" style="padding-top: 2rem;" aria-labelledby="projects-grid-heading">
+    <div class="container">
+      <div class="projects-detail-grid" id="projectsGrid" role="list">
+
+        <!-- ── PROJECT 1 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="ESIP_NAT-MON_001"
+                 data-categories="mongolia reduction"
+                 data-title="Darkhan Retrofit Credit Initiative"
+                 data-methodology="VM0008"
+                 data-type="Energy Demand Reduction"
+                 data-country="🇲🇳 Mongolia"
+                 data-volume="16,672 tCO₂e/yr"
+                 data-desc="Retrofit program targeting residential and commercial buildings in the Darkhan industrial region, upgrading insulation, heating systems, and weatherization to reduce fossil fuel demand and associated carbon emissions. This project creates durable energy efficiency gains while reducing household heating costs across Mongolia's harsh winters.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #1a237e, #283593); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">ESIP_NAT-MON_001</span>
+            </div>
+            <h2 class="pdc-title">Darkhan Retrofit Credit Initiative</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0008</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Energy Demand Reduction</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇲🇳 Mongolia</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 16,672 tCO₂e/yr</span>
+            </div>
+            <p class="pdc-desc">Retrofit program targeting residential and commercial buildings in the Darkhan industrial region, upgrading insulation, heating systems, and weatherization to reduce fossil fuel demand and associated carbon emissions. This project creates durable energy efficiency gains while reducing household heating costs across Mongolia's harsh winters.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Energy Efficiency</span>
+              <span class="pdc-tag">Mongolia</span>
+              <span class="pdc-tag">VM0008</span>
+              <span class="pdc-tag">Building Retrofit</span>
+              <span class="pdc-tag">CO₂ Reduction</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">16,672 tCO₂e/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for Darkhan Retrofit Credit Initiative">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 2 (FEATURED) ── -->
+        <article class="project-detail-card featured reveal"
+                 role="listitem"
+                 data-project-id="ESIP_NAT-MON_002"
+                 data-categories="mongolia removal biochar"
+                 data-title="Bio-SALAM 1 Biochar Carbon Removal"
+                 data-methodology="VM0044"
+                 data-type="Biochar CDR"
+                 data-country="🇲🇳 Mongolia"
+                 data-volume="90,192 tCO₂e/yr"
+                 data-desc="NatWorks' flagship biochar carbon dioxide removal project — the largest volume biochar CDR initiative in Central Asia. Agricultural residues from Mongolian farms undergo controlled pyrolysis to produce high-stability biochar, which is then applied to degraded agricultural soils. The project simultaneously sequesters carbon for 1000+ years and restores soil productivity.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #1a2800, #2e5000); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">ESIP_NAT-MON_002</span>
+              <span class="featured-badge">★ FLAGSHIP PROJECT</span>
+            </div>
+            <h2 class="pdc-title">Bio-SALAM 1 Biochar Carbon Removal</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0044</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Biochar CDR</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇲🇳 Mongolia</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 90,192 tCO₂e/yr</span>
+            </div>
+            <p class="pdc-desc">NatWorks' flagship biochar carbon dioxide removal project — the largest volume biochar CDR initiative in Central Asia. Agricultural residues from Mongolian farms undergo controlled pyrolysis to produce high-stability biochar, which is then applied to degraded agricultural soils. The project simultaneously sequesters carbon for 1000+ years and restores soil productivity.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Biochar CDR</span>
+              <span class="pdc-tag">VM0044</span>
+              <span class="pdc-tag">Mongolia</span>
+              <span class="pdc-tag">Pyrolysis</span>
+              <span class="pdc-tag">Soil Health</span>
+              <span class="pdc-tag">Verra VCS</span>
+              <span class="pdc-tag">Carbon Removal</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">90,192 tCO₂e/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for Bio-SALAM 1 Biochar Carbon Removal">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 3 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="ESIP_NAT-MON_003"
+                 data-categories="mongolia removal soil"
+                 data-title="Bio-Fertilizer Soil Carbon Enhancement"
+                 data-methodology="VM0042"
+                 data-type="Soil Carbon"
+                 data-country="🇲🇳 Mongolia"
+                 data-volume="52,287 tCO₂e/yr"
+                 data-desc="Large-scale bio-fertilizer application program across Mongolian agricultural regions. Combines enhanced organic matter inputs with scientifically managed cultivation practices to increase soil organic carbon stocks durably. The project supports food security while contributing significant climate mitigation co-benefits.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #3e2723, #5d4037); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">ESIP_NAT-MON_003</span>
+            </div>
+            <h2 class="pdc-title">Bio-Fertilizer Soil Carbon Enhancement</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0042</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Soil Carbon</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇲🇳 Mongolia</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 52,287 tCO₂e/yr</span>
+            </div>
+            <p class="pdc-desc">Large-scale bio-fertilizer application program across Mongolian agricultural regions. Combines enhanced organic matter inputs with scientifically managed cultivation practices to increase soil organic carbon stocks durably. The project supports food security while contributing significant climate mitigation co-benefits.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Soil Carbon</span>
+              <span class="pdc-tag">VM0042</span>
+              <span class="pdc-tag">Mongolia</span>
+              <span class="pdc-tag">Bio-Fertilizer</span>
+              <span class="pdc-tag">Agriculture</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">52,287 tCO₂e/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for Bio-Fertilizer Soil Carbon Enhancement">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 4 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="ESIP_NAT-MON_004"
+                 data-categories="mongolia removal afforestation"
+                 data-title="Darkhan Afforestation Initiative"
+                 data-methodology="VM0047"
+                 data-type="Afforestation"
+                 data-country="🇲🇳 Mongolia"
+                 data-volume="~9,704 tCO₂e/yr (net)"
+                 data-desc="Strategic afforestation program on degraded land around the Darkhan industrial zone, establishing native tree cover to sequester carbon, reduce desertification, and improve local air quality. Mongolia's steppe grasslands face increasing pressures from overgrazing and climate change; this project creates long-term carbon sinks while restoring biodiversity.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #1b5e20, #33691e); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">ESIP_NAT-MON_004</span>
+            </div>
+            <h2 class="pdc-title">Darkhan Afforestation Initiative</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0047</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Afforestation</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇲🇳 Mongolia</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> ~9,704 tCO₂e/yr (net)</span>
+            </div>
+            <p class="pdc-desc">Strategic afforestation program on degraded land around the Darkhan industrial zone, establishing native tree cover to sequester carbon, reduce desertification, and improve local air quality. Mongolia's steppe grasslands face increasing pressures from overgrazing and climate change; this project creates long-term carbon sinks while restoring biodiversity.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Afforestation</span>
+              <span class="pdc-tag">VM0047</span>
+              <span class="pdc-tag">Mongolia</span>
+              <span class="pdc-tag">Biodiversity</span>
+              <span class="pdc-tag">Land Restoration</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">~9,704 tCO₂e/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume (net)</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for Darkhan Afforestation Initiative">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 5 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="ESIP_NAT-MON_005"
+                 data-categories="mongolia reduction energy"
+                 data-title="VM0008 Buildings Weatherization Program"
+                 data-methodology="VM0008"
+                 data-type="Energy Demand Reduction"
+                 data-country="🇲🇳 Mongolia"
+                 data-volume="16,672 tCO₂e/yr"
+                 data-desc="Comprehensive building weatherization initiative targeting the residential sector in Mongolian urban centers. Upgraded insulation, double-glazing, door and window sealing, and boiler efficiency improvements significantly reduce heating energy demand during Mongolia's extreme winters, cutting coal consumption and CO₂ emissions.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #1a237e, #283593); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">ESIP_NAT-MON_005</span>
+            </div>
+            <h2 class="pdc-title">VM0008 Buildings Weatherization Program</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0008</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Energy Demand Reduction</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇲🇳 Mongolia</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 16,672 tCO₂e/yr</span>
+            </div>
+            <p class="pdc-desc">Comprehensive building weatherization initiative targeting the residential sector in Mongolian urban centers. Upgraded insulation, double-glazing, door and window sealing, and boiler efficiency improvements significantly reduce heating energy demand during Mongolia's extreme winters, cutting coal consumption and CO₂ emissions.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Weatherization</span>
+              <span class="pdc-tag">VM0008</span>
+              <span class="pdc-tag">Mongolia</span>
+              <span class="pdc-tag">Energy Efficiency</span>
+              <span class="pdc-tag">Coal Reduction</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">16,672 tCO₂e/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for VM0008 Buildings Weatherization Program">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 6 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="EGY-MANG-001"
+                 data-categories="egypt removal bluecarbon"
+                 data-title="Egyptian Coastal Mangrove Restoration"
+                 data-methodology="VM0033"
+                 data-type="Blue Carbon"
+                 data-country="🇪🇬 Egypt"
+                 data-volume="15,856 tCO₂e/yr"
+                 data-status="RFR (Ready for Review)"
+                 data-desc="Ambitious coastal restoration initiative along Egypt's coastlines, re-establishing native mangrove ecosystems that sequester carbon in both above-ground biomass and sediment. Mangrove carbon stocks are among the most dense in nature. The project also provides critical coastal protection, fish nursery habitat, and livelihoods for local fishing communities.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #003d33, #00695c); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">EGY-MANG-001</span>
+            </div>
+            <h2 class="pdc-title">Egyptian Coastal Mangrove Restoration</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0033</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Blue Carbon</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇪🇬 Egypt</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 15,856 tCO₂e/yr</span>
+              <span class="pdc-meta-item"><strong>Status:</strong> RFR (Ready for Review)</span>
+            </div>
+            <p class="pdc-desc">Ambitious coastal restoration initiative along Egypt's coastlines, re-establishing native mangrove ecosystems that sequester carbon in both above-ground biomass and sediment. Mangrove carbon stocks are among the most dense in nature. The project also provides critical coastal protection, fish nursery habitat, and livelihoods for local fishing communities.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Blue Carbon</span>
+              <span class="pdc-tag">VM0033</span>
+              <span class="pdc-tag">Egypt</span>
+              <span class="pdc-tag">Mangroves</span>
+              <span class="pdc-tag">Coastal Protection</span>
+              <span class="pdc-tag">Biodiversity</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">15,856 tCO₂e/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for Egyptian Coastal Mangrove Restoration">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 7 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="EGY-QUTOUF-001"
+                 data-categories="egypt removal agroforestry"
+                 data-title="QUTOUF Agroforestry Carbon Project"
+                 data-methodology="VM0042"
+                 data-type="Agroforestry"
+                 data-country="🇪🇬 Egypt"
+                 data-volume="5,606 VCUs/yr"
+                 data-desc="Integrated agroforestry system combining fruit trees, nitrogen-fixing species, and row crops on previously degraded Egyptian agricultural land. Trees sequester carbon in woody biomass while simultaneously improving farm productivity through shade, wind protection, and nitrogen fixation. The QUTOUF model creates diversified income streams for smallholder farmers.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #33691e, #558b2f); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">EGY-QUTOUF-001</span>
+            </div>
+            <h2 class="pdc-title">QUTOUF Agroforestry Carbon Project</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0042</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Agroforestry</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇪🇬 Egypt</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 5,606 VCUs/yr</span>
+            </div>
+            <p class="pdc-desc">Integrated agroforestry system combining fruit trees, nitrogen-fixing species, and row crops on previously degraded Egyptian agricultural land. Trees sequester carbon in woody biomass while simultaneously improving farm productivity through shade, wind protection, and nitrogen fixation. The QUTOUF model creates diversified income streams for smallholder farmers.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Agroforestry</span>
+              <span class="pdc-tag">VM0042</span>
+              <span class="pdc-tag">Egypt</span>
+              <span class="pdc-tag">Smallholder Farmers</span>
+              <span class="pdc-tag">Food Security</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">5,606 VCUs/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for QUTOUF Agroforestry Carbon Project">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 8 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="EGY-FAYOUM-001"
+                 data-categories="egypt removal agroforestry"
+                 data-title="El-Fayoum Agroforestry Initiative"
+                 data-methodology="VM0042"
+                 data-type="Agroforestry"
+                 data-country="🇪🇬 Egypt"
+                 data-volume="3,543 VCUs/yr"
+                 data-desc="Carbon agroforestry project in the historically significant El-Fayoum oasis region, integrating tree planting with existing agricultural systems to build soil carbon and above-ground biomass stocks. The project enhances water use efficiency — critical in Egypt's water-scarce environment — while creating durable carbon sinks.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #33691e, #558b2f); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">EGY-FAYOUM-001</span>
+            </div>
+            <h2 class="pdc-title">El-Fayoum Agroforestry Initiative</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0042</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Agroforestry</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇪🇬 Egypt</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 3,543 VCUs/yr</span>
+            </div>
+            <p class="pdc-desc">Carbon agroforestry project in the historically significant El-Fayoum oasis region, integrating tree planting with existing agricultural systems to build soil carbon and above-ground biomass stocks. The project enhances water use efficiency — critical in Egypt's water-scarce environment — while creating durable carbon sinks.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Agroforestry</span>
+              <span class="pdc-tag">VM0042</span>
+              <span class="pdc-tag">Egypt</span>
+              <span class="pdc-tag">Water Efficiency</span>
+              <span class="pdc-tag">El-Fayoum</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">3,543 VCUs/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for El-Fayoum Agroforestry Initiative">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 9 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="CDI-ECOB-001"
+                 data-categories="cdi reduction cookstoves"
+                 data-title="Ecobraiz Clean Cookstoves Initiative"
+                 data-methodology="VM0050"
+                 data-type="Clean Cookstoves"
+                 data-country="🇨🇮 Côte d'Ivoire"
+                 data-volume="39,577 tCO₂e/yr"
+                 data-desc="Mass distribution of improved biomass cookstoves to rural and peri-urban households in Côte d'Ivoire. The high-efficiency stoves dramatically reduce firewood consumption, cutting both household biomass burning emissions and forest degradation from fuel-wood collection. Women and children benefit most from reduced indoor air pollution and time saved on fuel collection.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #bf360c, #e64a19); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">CDI-ECOB-001</span>
+            </div>
+            <h2 class="pdc-title">Ecobraiz Clean Cookstoves Initiative</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0050</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Clean Cookstoves</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇨🇮 Côte d'Ivoire</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 39,577 tCO₂e/yr</span>
+            </div>
+            <p class="pdc-desc">Mass distribution of improved biomass cookstoves to rural and peri-urban households in Côte d'Ivoire. The high-efficiency stoves dramatically reduce firewood consumption, cutting both household biomass burning emissions and forest degradation from fuel-wood collection. Women and children benefit most from reduced indoor air pollution and time saved on fuel collection.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Clean Cookstoves</span>
+              <span class="pdc-tag">VM0050</span>
+              <span class="pdc-tag">Côte d'Ivoire</span>
+              <span class="pdc-tag">Indoor Air Quality</span>
+              <span class="pdc-tag">Women Empowerment</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">39,577 tCO₂e/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for Ecobraiz Clean Cookstoves Initiative">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 10 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="CDI-AFRI-001"
+                 data-categories="cdi reduction emobility"
+                 data-title="Africharger Electric Mobility Network"
+                 data-methodology="VM0038"
+                 data-type="E-Mobility"
+                 data-country="🇨🇮 Côte d'Ivoire"
+                 data-volume="10,404 tCO₂e/yr"
+                 data-desc="Infrastructure-led approach to transport decarbonization in Côte d'Ivoire, deploying electric vehicle charging stations to enable the commercial adoption of electric motorcycles, tricycles, and light vehicles. By making EV charging accessible and affordable, the project accelerates the shift away from fossil-fuel two and three-wheelers — the dominant transport mode for millions of Ivorians.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #0d47a1, #1565c0); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">CDI-AFRI-001</span>
+            </div>
+            <h2 class="pdc-title">Africharger Electric Mobility Network</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> VM0038</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> E-Mobility</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇨🇮 Côte d'Ivoire</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 10,404 tCO₂e/yr</span>
+            </div>
+            <p class="pdc-desc">Infrastructure-led approach to transport decarbonization in Côte d'Ivoire, deploying electric vehicle charging stations to enable the commercial adoption of electric motorcycles, tricycles, and light vehicles. By making EV charging accessible and affordable, the project accelerates the shift away from fossil-fuel two and three-wheelers — the dominant transport mode for millions of Ivorians.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">E-Mobility</span>
+              <span class="pdc-tag">VM0038</span>
+              <span class="pdc-tag">Côte d'Ivoire</span>
+              <span class="pdc-tag">Clean Transport</span>
+              <span class="pdc-tag">Urban Air Quality</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">10,404 tCO₂e/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for Africharger Electric Mobility Network">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT 11 ── -->
+        <article class="project-detail-card reveal"
+                 role="listitem"
+                 data-project-id="TZA-ELEC-001"
+                 data-categories="tanzania reduction ecooking"
+                 data-title="ELECTRAN Electric Cooking Project"
+                 data-methodology="GS4GG"
+                 data-type="Electric Cooking"
+                 data-country="🇹🇿 Tanzania"
+                 data-volume="6,000 tCO₂e/yr"
+                 data-desc="Promoting the adoption of electric cooking technologies in Tanzanian households under the Gold Standard for the Global Goals framework. The project facilitates the transition from charcoal and biomass cooking fuels to electric cookers powered by Tanzania's growing renewable energy grid, reducing deforestation, indoor air pollution, and carbon emissions simultaneously.">
+          <div class="pdc-header" style="background: linear-gradient(135deg, #4a148c, #6a1b9a); min-height: 160px;">
+            <div class="pdc-header-top">
+              <span class="pdc-id">TZA-ELEC-001</span>
+            </div>
+            <h2 class="pdc-title">ELECTRAN Electric Cooking Project</h2>
+          </div>
+          <div class="pdc-body">
+            <div class="pdc-meta">
+              <span class="pdc-meta-item"><strong>Methodology:</strong> GS4GG</span>
+              <span class="pdc-meta-item"><strong>Type:</strong> Electric Cooking</span>
+              <span class="pdc-meta-item"><strong>Country:</strong> 🇹🇿 Tanzania</span>
+              <span class="pdc-meta-item highlight"><strong>Annual Volume:</strong> 6,000 tCO₂e/yr</span>
+            </div>
+            <p class="pdc-desc">Promoting the adoption of electric cooking technologies in Tanzanian households under the Gold Standard for the Global Goals framework. The project facilitates the transition from charcoal and biomass cooking fuels to electric cookers powered by Tanzania's growing renewable energy grid, reducing deforestation, indoor air pollution, and carbon emissions simultaneously.</p>
+            <div class="pdc-benefits">
+              <span class="pdc-tag">Electric Cooking</span>
+              <span class="pdc-tag">GS4GG</span>
+              <span class="pdc-tag">Tanzania</span>
+              <span class="pdc-tag">Gold Standard</span>
+              <span class="pdc-tag">Deforestation Prevention</span>
+            </div>
+            <div class="pdc-footer">
+              <div>
+                <span class="pdc-volume">6,000 tCO₂e/yr</span>
+                <span class="pdc-volume-label">Annual Estimated Volume</span>
+              </div>
+              <button class="btn-detail" aria-label="View details for ELECTRAN Electric Cooking Project">Details →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Empty state (hidden until filter yields zero results) -->
+        <p class="no-results" id="noResults" aria-live="polite" hidden>
+          No projects match this filter. <button class="filter-btn" data-filter="all" style="display:inline-block; margin-left:0.5rem;">Show all</button>
+        </p>
+
+      </div><!-- /projects-detail-grid -->
+    </div><!-- /container -->
+  </section>
+
+  <!-- ===================== MODAL OVERLAY ===================== -->
+  <div id="projectModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <button id="modalClose" class="modal-close" aria-label="Close project details">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ===================== CTA BANNER ===================== -->
+  <section class="cta-banner" aria-labelledby="cta-heading">
+    <div class="container cta-banner-inner">
+      <span class="label-tag">Get Started</span>
+      <h2 id="cta-heading" class="animated-gradient-text">Ready to Invest in Durable Carbon Removal?</h2>
+      <p>Join the growing community of forward-thinking organizations sourcing high-quality biochar carbon credits from NatWorks Transformation.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-primary">Contact NatWorks</a>
+        <a href="https://natworks.co.in/" target="_blank" rel="noopener" class="btn-secondary">Visit natworks.co.in →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Col 1: Brand -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo footer-logo" aria-label="NatWorks Transformation Home">
+            <svg width="36" height="36" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="22" cy="22" r="21" stroke="rgba(102,187,106,0.2)" stroke-width="1"/>
+              <line x1="22" y1="8" x2="35" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="22" y1="8" x2="9" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="35" y1="18" x2="35" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+              <line x1="9" y1="18" x2="9" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+              <line x1="35" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="9" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="22" y1="8" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="35" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="9" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="35" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="9" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <circle cx="22" cy="8" r="3.5" fill="#66bb6a"/>
+              <circle cx="35" cy="18" r="3" fill="#2e7d32"/>
+              <circle cx="9" cy="18" r="3" fill="#2e7d32"/>
+              <circle cx="35" cy="30" r="3" fill="#66bb6a"/>
+              <circle cx="9" cy="30" r="3" fill="#66bb6a"/>
+              <circle cx="22" cy="38" r="3.5" fill="#2e7d32"/>
+              <circle cx="22" cy="22" r="4" fill="#e53935"/>
+              <circle cx="28" cy="14" r="2" fill="#e53935"/>
+            </svg>
+            <div class="logo-text">
+              <span><span class="nat">Nat</span><span class="works">Works</span></span>
+              <span class="tagline">Transformation</span>
+            </div>
+          </a>
+          <p class="footer-desc">Developing certified biochar carbon dioxide removal projects that convert agricultural residues into permanent carbon sinks — advancing a net-zero future across Asia and Africa.</p>
+        </div>
+
+        <!-- Col 2: Biochar -->
+        <nav class="footer-col" aria-label="Biochar pages">
+          <h4>Biochar</h4>
+          <ul role="list">
+            <li><a href="biochar.html">What is Biochar</a></li>
+            <li><a href="biochar.html#pyrolysis">Science of Pyrolysis</a></li>
+            <li><a href="biochar.html#cobenefits">Co-Benefits</a></li>
+            <li><a href="biochar.html#vm0044">VM0044 Methodology</a></li>
+          </ul>
+        </nav>
+
+        <!-- Col 3: Projects -->
+        <nav class="footer-col" aria-label="Projects pages">
+          <h4>Projects</h4>
+          <ul role="list">
+            <li><a href="projects.html">All Projects</a></li>
+            <li><a href="projects.html">Biochar CDR</a></li>
+            <li><a href="projects.html">Soil Carbon</a></li>
+            <li><a href="projects.html">Blue Carbon</a></li>
+          </ul>
+        </nav>
+
+        <!-- Col 4: Standards -->
+        <nav class="footer-col" aria-label="Carbon standards">
+          <h4>Standards</h4>
+          <ul role="list">
+            <li><a href="https://verra.org" target="_blank" rel="noopener">Verra VCS</a></li>
+            <li><a href="https://verra.org" target="_blank" rel="noopener">VM0044</a></li>
+            <li><a href="https://goldstandard.org" target="_blank" rel="noopener">Gold Standard</a></li>
+            <li><a href="projects.html">Afforestation</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 NatWorks Transformation. All rights reserved. | Advancing carbon removal for a net-zero future.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/projects.js"></script>
+</body>
+</html>

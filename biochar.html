@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The science of biochar — pyrolysis, carbon permanence, co-benefits, and Verra VM0044 methodology explained by NatWorks Transformation.">
+  <meta property="og:title" content="What is Biochar | NatWorks Transformation">
+  <title>What is Biochar | NatWorks Transformation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── Page-specific styles ── */
+
+    /* Pyrolysis steps */
+    .pyrolysis-steps {
+      display: flex;
+      align-items: stretch;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-top: 2.5rem;
+      justify-content: center;
+    }
+    .pyro-step {
+      background: var(--card-bg, rgba(255,255,255,0.04));
+      border: 1px solid rgba(102,187,106,0.18);
+      border-radius: 14px;
+      padding: 1.5rem 1.2rem;
+      flex: 1 1 170px;
+      max-width: 200px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .pyro-step:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(102,187,106,0.15);
+    }
+    .pyro-step-icon {
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+    .pyro-step h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #66bb6a;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .pyro-step p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .pyro-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: #2e7d32;
+      padding: 0 0.4rem;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .pyrolysis-steps { flex-direction: column; align-items: center; }
+      .pyro-arrow { transform: rotate(90deg); padding: 0.3rem 0; }
+      .pyro-step { max-width: 100%; }
+    }
+
+    /* Stability chart */
+    .stability-chart {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(102,187,106,0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    .stability-chart h3 {
+      color: #a5d6a7;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .stability-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .stability-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 130px;
+      align-items: center;
+      gap: 1rem;
+    }
+    @media (max-width: 600px) {
+      .stability-row { grid-template-columns: 120px 1fr 100px; }
+    }
+    .stability-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+      text-align: right;
+    }
+    .stability-bar-track {
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      height: 12px;
+      overflow: hidden;
+    }
+    .stability-bar {
+      height: 100%;
+      border-radius: 99px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .stability-years {
+      font-size: 0.75rem;
+      color: #a5d6a7;
+      font-weight: 600;
+    }
+    .permanence-tip {
+      background: rgba(46,125,50,0.12);
+      border: 1px solid rgba(102,187,106,0.25);
+      border-left: 4px solid #66bb6a;
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin-top: 2rem;
+      font-size: 0.88rem;
+      color: #a5d6a7;
+      line-height: 1.6;
+    }
+
+    /* Co-benefit grid */
+    .cobenefit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .cobenefit-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(102,187,106,0.15);
+      border-radius: 14px;
+      padding: 1.6rem;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .cobenefit-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(102,187,106,0.4);
+      box-shadow: 0 12px 32px rgba(102,187,106,0.12);
+    }
+    .cobenefit-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .cobenefit-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #66bb6a;
+      margin-bottom: 0.5rem;
+    }
+    .cobenefit-card p {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* VM0044 layout */
+    .vm0044-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .vm0044-grid { grid-template-columns: 1fr; }
+    }
+    .vm0044-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    /* Partner section cards */
+    .partner-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .partner-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(102,187,106,0.15);
+      border-radius: 14px;
+      padding: 1.8rem;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .partner-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(102,187,106,0.35);
+    }
+    .partner-card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .partner-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #66bb6a;
+      margin-bottom: 0.6rem;
+    }
+    .partner-card p {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Biochar microstructure SVG wrapper */
+    .biochar-svg-wrap {
+      display: flex;
+      justify-content: center;
+    }
+    .biochar-svg-wrap svg {
+      max-width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
+
+    /* Formula SVG wrapper */
+    .formula-svg-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .formula-svg-wrap svg {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="logo" aria-label="NatWorks Transformation Home">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="22" cy="22" r="21" stroke="rgba(102,187,106,0.2)" stroke-width="1"/>
+        <line x1="22" y1="8" x2="35" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="22" y1="8" x2="9" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="35" y1="18" x2="35" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+        <line x1="9" y1="18" x2="9" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+        <line x1="35" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="9" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="22" y1="8" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="35" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="9" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="35" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="9" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <circle cx="22" cy="8" r="3.5" fill="#66bb6a"/>
+        <circle cx="35" cy="18" r="3" fill="#2e7d32"/>
+        <circle cx="9" cy="18" r="3" fill="#2e7d32"/>
+        <circle cx="35" cy="30" r="3" fill="#66bb6a"/>
+        <circle cx="9" cy="30" r="3" fill="#66bb6a"/>
+        <circle cx="22" cy="38" r="3.5" fill="#2e7d32"/>
+        <circle cx="22" cy="22" r="4" fill="#e53935"/>
+        <circle cx="28" cy="14" r="2" fill="#e53935"/>
+      </svg>
+      <div class="logo-text">
+        <span><span class="nat">Nat</span><span class="works">Works</span></span>
+        <span class="tagline">Transformation</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="biochar.html" aria-current="page">What is Biochar</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="index.html#impact">Impact</a></li>
+      <li><a href="index.html#methodology">Methodology</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="https://natworks.co.in/" target="_blank" rel="noopener" class="nav-cta" aria-label="Visit NatWorks main website">Visit NatWorks →</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" style="min-height: 65vh;" aria-label="Biochar science hero">
+    <div id="particles" class="particle-container" aria-hidden="true"></div>
+    <div class="carbon-ring-bg" aria-hidden="true">
+      <div class="carbon-ring carbon-ring-1"></div>
+      <div class="carbon-ring carbon-ring-2"></div>
+      <div class="carbon-ring carbon-ring-3"></div>
+    </div>
+    <div class="hero-content">
+      <span class="label-tag hero-animate-1">⚗️ Carbon Science</span>
+      <h1 class="hero-animate-2">The Science of <span class="animated-gradient-text">Biochar</span></h1>
+      <p class="hero-animate-3">
+        A rigorous exploration of biochar formation, carbon permanence mechanisms, soil co-benefits, and the VM0044 methodology that quantifies its climate impact.
+      </p>
+      <div class="hero-btns hero-animate-4">
+        <a href="#what-is-biochar" class="btn-primary">Explore The Science</a>
+        <a href="projects.html" class="btn-secondary">Our Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 1: WHAT IS BIOCHAR ===================== -->
+  <section id="what-is-biochar" class="section" aria-labelledby="whatisbiochar-heading">
+    <div class="container">
+      <div class="two-col">
+
+        <!-- LEFT -->
+        <div class="reveal-left">
+          <span class="label-tag">Definition</span>
+          <h2 id="whatisbiochar-heading">What is <span class="gradient-text">Biochar?</span></h2>
+          <p>
+            Biochar is a carbon-rich solid material produced by the thermochemical conversion of organic matter — biomass — in an oxygen-limited environment through a process called pyrolysis. The term is a compound of "biological" and "charcoal", reflecting both its organic origins and its charcoal-like properties.
+          </p>
+          <p>
+            Unlike charcoal used for cooking, biochar is specifically engineered for soil application and carbon sequestration. Its distinctive porous microstructure — visible under a microscope as a honeycomb of interconnected channels — provides the structural basis for its resistance to decomposition and its beneficial interactions with soil biology.
+          </p>
+          <p>
+            The International Biochar Initiative (IBI) defines biochar as "a solid material obtained from the thermochemical conversion of biomass in an oxygen-limited environment" that meets minimum quality standards for soil application.
+          </p>
+        </div>
+
+        <!-- RIGHT: Biochar microstructure SVG -->
+        <div class="reveal-right biochar-svg-wrap" aria-label="Biochar microstructure diagram">
+          <svg width="380" height="280" viewBox="0 0 380 280" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing biochar's porous aromatic carbon microstructure">
+            <defs>
+              <linearGradient id="bgMicro" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0d1a10"/>
+                <stop offset="100%" stop-color="#071209"/>
+              </linearGradient>
+              <filter id="hexglow">
+                <feGaussianBlur stdDeviation="2" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <rect width="380" height="280" rx="14" fill="url(#bgMicro)"/>
+
+            <!-- Title -->
+            <text x="190" y="22" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="11" font-weight="700" fill="#a5d6a7" letter-spacing="1">BIOCHAR MICROSTRUCTURE</text>
+
+            <!-- ── Hexagonal aromatic rings: row 1 (y≈70) ── -->
+            <!-- Hex helper: flat-top, r=18 -->
+            <!-- Ring A (col1 row1): cx=60, cy=70 -->
+            <polygon points="60,52 78,61 78,79 60,88 42,79 42,61" fill="#1a2e1a" stroke="#66bb6a" stroke-width="1.5" filter="url(#hexglow)"/>
+            <text x="60" y="74" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <!-- Ring B -->
+            <polygon points="100,52 118,61 118,79 100,88 82,79 82,61" fill="#1a2e1a" stroke="#66bb6a" stroke-width="1.5" filter="url(#hexglow)"/>
+            <text x="100" y="74" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <!-- Ring C -->
+            <polygon points="140,52 158,61 158,79 140,88 122,79 122,61" fill="#1a2e1a" stroke="#66bb6a" stroke-width="1.5" filter="url(#hexglow)"/>
+            <text x="140" y="74" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <!-- Ring D -->
+            <polygon points="180,52 198,61 198,79 180,88 162,79 162,61" fill="#1a2e1a" stroke="#66bb6a" stroke-width="1.5" filter="url(#hexglow)"/>
+            <text x="180" y="74" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <!-- Ring E -->
+            <polygon points="220,52 238,61 238,79 220,88 202,79 202,61" fill="#1a2e1a" stroke="#66bb6a" stroke-width="1.5" filter="url(#hexglow)"/>
+            <text x="220" y="74" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <!-- Ring F -->
+            <polygon points="260,52 278,61 278,79 260,88 242,79 242,61" fill="#1a2e1a" stroke="#66bb6a" stroke-width="1.5" filter="url(#hexglow)"/>
+            <text x="260" y="74" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <!-- Ring G -->
+            <polygon points="300,52 318,61 318,79 300,88 282,79 282,61" fill="#1a2e1a" stroke="#66bb6a" stroke-width="1.5" filter="url(#hexglow)"/>
+            <text x="300" y="74" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+
+            <!-- ── Row 2 (offset, y≈115) ── -->
+            <polygon points="80,96 98,105 98,123 80,132 62,123 62,105" fill="#152812" stroke="#4caf50" stroke-width="1.3"/>
+            <text x="80" y="119" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="120,96 138,105 138,123 120,132 102,123 102,105" fill="#152812" stroke="#4caf50" stroke-width="1.3"/>
+            <text x="120" y="119" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="160,96 178,105 178,123 160,132 142,123 142,105" fill="#152812" stroke="#4caf50" stroke-width="1.3"/>
+            <text x="160" y="119" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="200,96 218,105 218,123 200,132 182,123 182,105" fill="#152812" stroke="#4caf50" stroke-width="1.3"/>
+            <text x="200" y="119" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="240,96 258,105 258,123 240,132 222,123 222,105" fill="#152812" stroke="#4caf50" stroke-width="1.3"/>
+            <text x="240" y="119" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="280,96 298,105 298,123 280,132 262,123 262,105" fill="#152812" stroke="#4caf50" stroke-width="1.3"/>
+            <text x="280" y="119" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+
+            <!-- ── Row 3 (y≈155) — same as row 1 offset ── -->
+            <polygon points="60,136 78,145 78,163 60,172 42,163 42,145" fill="#0d1f0d" stroke="#388e3c" stroke-width="1.2"/>
+            <text x="60" y="159" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="100,136 118,145 118,163 100,172 82,163 82,145" fill="#0d1f0d" stroke="#388e3c" stroke-width="1.2"/>
+            <text x="100" y="159" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="140,136 158,145 158,163 140,172 122,163 122,145" fill="#0d1f0d" stroke="#388e3c" stroke-width="1.2"/>
+            <text x="140" y="159" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="180,136 198,145 198,163 180,172 162,163 162,145" fill="#0d1f0d" stroke="#388e3c" stroke-width="1.2"/>
+            <text x="180" y="159" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="220,136 238,145 238,163 220,172 202,163 202,145" fill="#0d1f0d" stroke="#388e3c" stroke-width="1.2"/>
+            <text x="220" y="159" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="260,136 278,145 278,163 260,172 242,163 242,145" fill="#0d1f0d" stroke="#388e3c" stroke-width="1.2"/>
+            <text x="260" y="159" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+            <polygon points="300,136 318,145 318,163 300,172 282,163 282,145" fill="#0d1f0d" stroke="#388e3c" stroke-width="1.2"/>
+            <text x="300" y="159" text-anchor="middle" font-family="Montserrat" font-size="9" fill="#2e7d32" font-weight="800">C</text>
+
+            <!-- Pore channel label (between row 1 and row 2) -->
+            <rect x="320" y="88" width="52" height="18" rx="9" fill="rgba(20,40,20,0.85)" stroke="rgba(102,187,106,0.3)" stroke-width="1"/>
+            <text x="346" y="100" text-anchor="middle" font-family="Inter, sans-serif" font-size="7.5" fill="#a5d6a7">Pore channels</text>
+            <line x1="320" y1="97" x2="300" y2="90" stroke="rgba(102,187,106,0.4)" stroke-width="1" stroke-dasharray="3 2"/>
+
+            <!-- Micro-pore label -->
+            <rect x="8" y="92" width="46" height="30" rx="6" fill="rgba(20,40,20,0.85)" stroke="rgba(102,187,106,0.3)" stroke-width="1"/>
+            <text x="31" y="104" text-anchor="middle" font-family="Inter, sans-serif" font-size="6.5" fill="#a5d6a7">Micro-pores</text>
+            <text x="31" y="116" text-anchor="middle" font-family="Inter, sans-serif" font-size="6" fill="rgba(165,214,167,0.7)">(microbe habitat)</text>
+            <line x1="54" y1="107" x2="62" y2="110" stroke="rgba(102,187,106,0.4)" stroke-width="1" stroke-dasharray="3 2"/>
+
+            <!-- Surface functional groups: oxygen (red dots) -->
+            <circle cx="78" cy="88" r="4" fill="#e53935" opacity="0.9"/>
+            <circle cx="158" cy="88" r="4" fill="#e53935" opacity="0.9"/>
+            <circle cx="238" cy="88" r="4" fill="#e53935" opacity="0.9"/>
+            <circle cx="118" cy="132" r="4" fill="#e53935" opacity="0.9"/>
+            <circle cx="298" cy="132" r="4" fill="#e53935" opacity="0.9"/>
+            <!-- Hydrogen (blue dots) -->
+            <circle cx="42" cy="79" r="3.5" fill="#42a5f5" opacity="0.9"/>
+            <circle cx="202" cy="79" r="3.5" fill="#42a5f5" opacity="0.9"/>
+            <circle cx="318" cy="79" r="3.5" fill="#42a5f5" opacity="0.9"/>
+            <circle cx="62" cy="123" r="3.5" fill="#42a5f5" opacity="0.9"/>
+            <circle cx="222" cy="123" r="3.5" fill="#42a5f5" opacity="0.9"/>
+
+            <!-- Legend -->
+            <circle cx="20" cy="204" r="4" fill="#e53935"/>
+            <text x="28" y="208" font-family="Inter,sans-serif" font-size="8" fill="#a5d6a7">Oxygen groups</text>
+            <circle cx="20" cy="220" r="3.5" fill="#42a5f5"/>
+            <text x="28" y="224" font-family="Inter,sans-serif" font-size="8" fill="#a5d6a7">Hydrogen groups</text>
+            <polygon points="20,230 26,234 26,242 20,246 14,242 14,234" fill="#1a2e1a" stroke="#66bb6a" stroke-width="1"/>
+            <text x="28" y="240" font-family="Inter,sans-serif" font-size="8" fill="#a5d6a7">Aromatic C-C bonds</text>
+
+            <!-- "Stable Carbon Matrix" label -->
+            <text x="190" y="256" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(165,214,167,0.7)" font-style="italic">Stable Carbon Matrix — resistant to biological decomposition</text>
+
+            <!-- Arrow: Aromatic C-C bonds label -->
+            <text x="190" y="198" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="#a5d6a7">← Aromatic C-C Bonds →</text>
+            <line x1="190" y1="172" x2="190" y2="193" stroke="rgba(165,214,167,0.4)" stroke-width="1" stroke-dasharray="3 2"/>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 2: PYROLYSIS PROCESS ===================== -->
+  <section id="pyrolysis" class="section section-alt" aria-labelledby="pyrolysis-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">The Process</span>
+        <h2 id="pyrolysis-heading">Pyrolysis: <span class="gradient-text">Controlled Thermal Conversion</span></h2>
+        <p style="max-width:700px; margin: 0 auto;">
+          Pyrolysis is the thermochemical decomposition of organic material at elevated temperatures (350–700°C) in the absence or severe restriction of oxygen. This distinguishes it from combustion (which requires oxygen and produces CO₂) and from composting (which is biological and slow).
+        </p>
+      </div>
+
+      <div class="pyrolysis-steps" role="list" aria-label="Pyrolysis process steps">
+
+        <div class="pyro-step reveal" role="listitem">
+          <span class="pyro-step-icon" aria-hidden="true">🌾</span>
+          <h3>Feedstock Preparation</h3>
+          <p>Biomass (rice husks, wheat straw, wood chips, bamboo) is dried to &lt;20% moisture and sized for uniform processing. Feedstock quality determines biochar quality.</p>
+        </div>
+
+        <div class="pyro-arrow" aria-hidden="true">→</div>
+
+        <div class="pyro-step reveal" role="listitem">
+          <span class="pyro-step-icon" aria-hidden="true">🔥</span>
+          <h3>Thermal Decomposition</h3>
+          <p>At 200–300°C, moisture evaporates and volatile organic compounds release. At 350–500°C, cellulose and hemicellulose break down. At 500–700°C, lignin converts to stable aromatic carbon.</p>
+        </div>
+
+        <div class="pyro-arrow" aria-hidden="true">→</div>
+
+        <div class="pyro-step reveal" role="listitem">
+          <span class="pyro-step-icon" aria-hidden="true">⚗️</span>
+          <h3>Gas Separation</h3>
+          <p>Volatile pyrolysis gases (syngas) and bio-oil vapors are separated and can be used for process heat. The remaining solid is raw biochar char.</p>
+        </div>
+
+        <div class="pyro-arrow" aria-hidden="true">→</div>
+
+        <div class="pyro-step reveal" role="listitem">
+          <span class="pyro-step-icon" aria-hidden="true">🌡️</span>
+          <h3>Cooling &amp; Testing</h3>
+          <p>Biochar is cooled under inert conditions, then tested for carbon content (&gt;50% organic C), H:Corg ratio (&lt;0.7 for stability), pH, and contaminants.</p>
+        </div>
+
+        <div class="pyro-arrow" aria-hidden="true">→</div>
+
+        <div class="pyro-step reveal" role="listitem">
+          <span class="pyro-step-icon" aria-hidden="true">✅</span>
+          <h3>Quality Certification</h3>
+          <p>Certified biochar meeting IBI or EBC standards with documented production parameters for MRV under VM0044.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 3: CARBON PERMANENCE ===================== -->
+  <section id="permanence" class="section" aria-labelledby="permanence-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Permanence</span>
+        <h2 id="permanence-heading">Carbon <span class="gradient-text">Permanence</span> Across Storage Types</h2>
+      </div>
+      <p style="max-width:780px; margin:0 auto 0.5rem;">
+        The defining advantage of biochar over other carbon removal approaches is its extraordinary carbon stability. While plant-based carbon in wood or soil organic matter typically cycles back to CO₂ within decades, biochar's aromatic carbon structure resists biological and chemical breakdown for hundreds to thousands of years.
+      </p>
+
+      <div class="stability-chart reveal">
+        <h3 style="margin-bottom:1.5rem;">Carbon Storage Stability Comparison</h3>
+        <div class="stability-bars" role="list" aria-label="Carbon stability comparison chart">
+
+          <div class="stability-row" role="listitem">
+            <span class="stability-label">Biochar</span>
+            <div class="stability-bar-track">
+              <div class="stability-bar" data-width="95" style="background: linear-gradient(90deg, #2e7d32, #66bb6a);"></div>
+            </div>
+            <span class="stability-years">500–5,000+ years</span>
+          </div>
+
+          <div class="stability-row" role="listitem">
+            <span class="stability-label">Tropical Forest</span>
+            <div class="stability-bar-track">
+              <div class="stability-bar" data-width="65" style="background: linear-gradient(90deg, #33691e, #558b2f);"></div>
+            </div>
+            <span class="stability-years">50–200 years</span>
+          </div>
+
+          <div class="stability-row" role="listitem">
+            <span class="stability-label">Temperate Forest</span>
+            <div class="stability-bar-track">
+              <div class="stability-bar" data-width="50" style="background: linear-gradient(90deg, #388e3c, #66bb6a);"></div>
+            </div>
+            <span class="stability-years">30–100 years</span>
+          </div>
+
+          <div class="stability-row" role="listitem">
+            <span class="stability-label">Soil Organic Carbon</span>
+            <div class="stability-bar-track">
+              <div class="stability-bar" data-width="40" style="background: linear-gradient(90deg, #5d4037, #8d6e63);"></div>
+            </div>
+            <span class="stability-years">10–50 years</span>
+          </div>
+
+          <div class="stability-row" role="listitem">
+            <span class="stability-label">Biomass (uncomposted)</span>
+            <div class="stability-bar-track">
+              <div class="stability-bar" data-width="20" style="background: linear-gradient(90deg, #bf360c, #e64a19);"></div>
+            </div>
+            <span class="stability-years">1–5 years</span>
+          </div>
+
+          <div class="stability-row" role="listitem">
+            <span class="stability-label">Atmospheric CO₂</span>
+            <div class="stability-bar-track">
+              <div class="stability-bar" data-width="10" style="background: linear-gradient(90deg, #1a73e8, #42a5f5);"></div>
+            </div>
+            <span class="stability-years">Reference: no storage</span>
+          </div>
+
+        </div>
+      </div>
+
+      <p class="permanence-tip">
+        <strong>H:Corg ratio &lt; 0.7</strong> is the key stability threshold specified by VM0044. Biochar produced at temperatures above 450°C consistently achieves this ratio, ensuring the sequestered carbon will remain stable for centuries under soil conditions.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 4: CO-BENEFITS ===================== -->
+  <section id="cobenefits" class="section section-alt" aria-labelledby="cobenefits-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Co-Benefits</span>
+        <h2 id="cobenefits-heading">Beyond Carbon: <span class="gradient-text">Regenerative Co-Benefits</span></h2>
+        <p>
+          Biochar's value proposition extends far beyond carbon sequestration. Its physical structure and chemical properties interact with soil, water, and biology to produce a cascade of co-benefits that make it unique among carbon removal approaches.
+        </p>
+      </div>
+
+      <div class="cobenefit-grid">
+
+        <div class="cobenefit-card reveal">
+          <span class="cobenefit-icon" aria-hidden="true">🌱</span>
+          <h3>Soil Health Restoration</h3>
+          <p>Biochar's porous structure improves soil aggregate stability, aeration, and tilth. Degraded and compacted soils show measurable improvements in physical properties within one growing season.</p>
+        </div>
+
+        <div class="cobenefit-card reveal">
+          <span class="cobenefit-icon" aria-hidden="true">💧</span>
+          <h3>Water Retention</h3>
+          <p>Each gram of biochar can hold several times its weight in water. In sandy or drought-prone soils, biochar additions reduce irrigation requirements by 15–30%, critical for water-scarce regions.</p>
+        </div>
+
+        <div class="cobenefit-card reveal">
+          <span class="cobenefit-icon" aria-hidden="true">🌾</span>
+          <h3>Crop Yield Improvement</h3>
+          <p>Field trials across Asia and Africa consistently show 10–40% yield improvements on degraded soils where biochar is applied, with larger gains on highly depleted soils.</p>
+        </div>
+
+        <div class="cobenefit-card reveal">
+          <span class="cobenefit-icon" aria-hidden="true">♻️</span>
+          <h3>Waste Stream Valorization</h3>
+          <p>Agricultural residues that would be openly burned — releasing CO₂, black carbon, and particulates — are converted into a productive soil amendment, eliminating a significant local pollution source.</p>
+        </div>
+
+        <div class="cobenefit-card reveal">
+          <span class="cobenefit-icon" aria-hidden="true">🌿</span>
+          <h3>Methane &amp; N₂O Prevention</h3>
+          <p>Biochar alters soil microbial communities in ways that suppress methanogenic archaea and denitrifying bacteria, reducing soil methane and nitrous oxide emissions — both potent greenhouse gases.</p>
+        </div>
+
+        <div class="cobenefit-card reveal">
+          <span class="cobenefit-icon" aria-hidden="true">👨‍🌾</span>
+          <h3>Rural Livelihoods</h3>
+          <p>Biochar supply chains create employment in biomass collection, processing, quality testing, and logistics, generating rural income in often marginal agricultural communities.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 5: VM0044 ===================== -->
+  <section id="vm0044" class="section" aria-labelledby="vm0044-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Standards</span>
+        <h2 id="vm0044-heading">Verra <span class="gradient-text">VM0044</span>: How It Works</h2>
+      </div>
+
+      <div class="vm0044-grid">
+
+        <!-- LEFT -->
+        <div class="reveal-left">
+          <p>
+            Verra's VM0044 — Methodology for Biochar Carbon Dioxide Removal — is the definitive quantification and verification framework for biochar CDR. Released in 2021, it established the first rigorous accounting system for biochar as a carbon removal pathway.
+          </p>
+          <p>
+            VM0044 covers the entire biochar lifecycle: from biomass sourcing and production process monitoring, through biochar characterisation and quality verification, to application tracking and permanence accounting. It requires that every batch of biochar be characterised for its organic carbon content and stability ratio (H:Corg).
+          </p>
+
+          <div class="vm0044-features feature-cards">
+
+            <div class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">📊</span>
+              <div>
+                <h3>Permanence Factor</h3>
+                <p>VM0044 applies a permanence discount based on H:Corg ratio and temperature profile, accounting for the small fraction of biochar carbon that may decompose within the crediting period.</p>
+              </div>
+            </div>
+
+            <div class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">🔍</span>
+              <div>
+                <h3>Batch-Level MRV</h3>
+                <p>Each production batch is weighed, sampled, and lab-analysed. Production records and logistics are audited. Application sites are GPS-documented and monitored.</p>
+              </div>
+            </div>
+
+            <div class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">🚫</span>
+              <div>
+                <h3>Leakage Accounting</h3>
+                <p>The methodology quantifies and deducts all project-related emissions: energy used in pyrolysis, transport emissions, and foregone use of the biomass feedstock.</p>
+              </div>
+            </div>
+
+            <div class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">✅</span>
+              <div>
+                <h3>Third-Party Verification</h3>
+                <p>Independent auditors accredited by Verra conduct periodic verification audits, reviewing production data, lab results, and application records before carbon credits are issued.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT: VM0044 formula SVG -->
+        <div class="reveal-right formula-svg-wrap" aria-label="VM0044 net CDR formula diagram">
+          <svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VM0044 Net CDR calculation formula: Net CDR equals Biochar C times Permanence Factor minus Baseline plus Project Emissions plus Leakage">
+            <defs>
+              <linearGradient id="formulaBg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0d1a10"/>
+                <stop offset="100%" stop-color="#061008"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" rx="16" fill="url(#formulaBg)"/>
+            <rect x="1" y="1" width="398" height="298" rx="15" fill="none" stroke="rgba(102,187,106,0.2)" stroke-width="1"/>
+
+            <!-- Title -->
+            <text x="200" y="26" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="11" font-weight="700" fill="#a5d6a7" letter-spacing="1">NET CDR CALCULATION — VM0044</text>
+            <line x1="30" y1="34" x2="370" y2="34" stroke="rgba(102,187,106,0.2)" stroke-width="1"/>
+
+            <!-- "Net CDR =" label -->
+            <text x="200" y="62" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="13" font-weight="800" fill="#ffffff">Net CDR  =</text>
+
+            <!-- Green box: Biochar C content -->
+            <rect x="30" y="75" width="110" height="50" rx="10" fill="rgba(46,125,50,0.3)" stroke="#2e7d32" stroke-width="1.5"/>
+            <text x="85" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#66bb6a">Biochar C</text>
+            <text x="85" y="112" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(165,214,167,0.8)">Organic Carbon (kg)</text>
+
+            <!-- × symbol -->
+            <text x="152" y="107" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="18" font-weight="700" fill="#a5d6a7">×</text>
+
+            <!-- Blue box: Permanence Factor -->
+            <rect x="168" y="75" width="110" height="50" rx="10" fill="rgba(26,115,232,0.2)" stroke="#1a73e8" stroke-width="1.5"/>
+            <text x="223" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#42a5f5">Permanence</text>
+            <text x="223" y="112" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#42a5f5">Factor (PF)</text>
+
+            <!-- − symbol -->
+            <text x="290" y="107" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="22" font-weight="700" fill="#e57373">−</text>
+
+            <!-- Deductions block -->
+            <rect x="306" y="68" width="80" height="64" rx="10" fill="rgba(229,57,53,0.15)" stroke="#e53935" stroke-width="1.5"/>
+            <text x="346" y="88" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#ef5350">Baseline</text>
+            <line x1="316" y1="94" x2="376" y2="94" stroke="rgba(239,83,80,0.3)" stroke-width="1"/>
+            <text x="346" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="#ef9a9a">Project Emissions</text>
+            <line x1="316" y1="113" x2="376" y2="113" stroke="rgba(239,83,80,0.3)" stroke-width="1"/>
+            <text x="346" y="124" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#ef5350">Leakage</text>
+
+            <!-- Arrows pointing down from each box -->
+            <line x1="85" y1="125" x2="85" y2="150" stroke="rgba(102,187,106,0.4)" stroke-width="1.5" marker-end="url(#arrowDownG)"/>
+            <line x1="223" y1="125" x2="223" y2="150" stroke="rgba(66,165,245,0.4)" stroke-width="1.5" marker-end="url(#arrowDownB)"/>
+            <line x1="346" y1="132" x2="346" y2="150" stroke="rgba(229,57,53,0.4)" stroke-width="1.5" marker-end="url(#arrowDownR)"/>
+
+            <defs>
+              <marker id="arrowDownG" markerWidth="7" markerHeight="7" refX="3.5" refY="6" orient="auto">
+                <path d="M1,1 L3.5,6 L6,1" stroke="#66bb6a" stroke-width="1.5" fill="none"/>
+              </marker>
+              <marker id="arrowDownB" markerWidth="7" markerHeight="7" refX="3.5" refY="6" orient="auto">
+                <path d="M1,1 L3.5,6 L6,1" stroke="#42a5f5" stroke-width="1.5" fill="none"/>
+              </marker>
+              <marker id="arrowDownR" markerWidth="7" markerHeight="7" refX="3.5" refY="6" orient="auto">
+                <path d="M1,1 L3.5,6 L6,1" stroke="#ef5350" stroke-width="1.5" fill="none"/>
+              </marker>
+            </defs>
+
+            <!-- Desc boxes below arrows -->
+            <rect x="18" y="152" width="136" height="36" rx="8" fill="rgba(46,125,50,0.15)" stroke="rgba(46,125,50,0.3)" stroke-width="1"/>
+            <text x="86" y="165" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="#a5d6a7">H:Corg ratio determines PF</text>
+            <text x="86" y="178" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="#a5d6a7">Range: 0.0–1.0 (higher = better)</text>
+
+            <rect x="156" y="152" width="136" height="36" rx="8" fill="rgba(26,115,232,0.1)" stroke="rgba(26,115,232,0.3)" stroke-width="1"/>
+            <text x="224" y="165" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="#90caf9">Temperature profile verified</text>
+            <text x="224" y="178" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="#90caf9">per batch by auditors</text>
+
+            <rect x="298" y="152" width="88" height="36" rx="8" fill="rgba(229,57,53,0.1)" stroke="rgba(229,57,53,0.3)" stroke-width="1"/>
+            <text x="342" y="165" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="#ef9a9a">Transport, energy</text>
+            <text x="342" y="178" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="#ef9a9a">&amp; foregone use</text>
+
+            <!-- Bottom result band -->
+            <rect x="30" y="205" width="340" height="40" rx="10" fill="rgba(46,125,50,0.2)" stroke="rgba(102,187,106,0.4)" stroke-width="1.5"/>
+            <text x="200" y="221" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="10" font-weight="700" fill="#66bb6a">= Net Verified Carbon Removal (tCO₂e)</text>
+            <text x="200" y="237" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="rgba(165,214,167,0.7)">Issued as Verified Carbon Units (VCUs) on Verra Registry</text>
+
+            <!-- Footnote -->
+            <text x="200" y="275" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="rgba(165,214,167,0.4)">Source: Verra VM0044 v2.0 — Methodology for Biochar CDR</text>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 6: OUR BIOCHAR PROJECTS ===================== -->
+  <section class="section section-alt" aria-labelledby="biochar-projects-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Our Work</span>
+        <h2 id="biochar-projects-heading">Our Biochar <span class="gradient-text">Projects</span></h2>
+      </div>
+
+      <div class="projects-grid" role="list">
+
+        <!-- Card 1: Bio-SALAM 1 -->
+        <article class="project-card featured" role="listitem">
+          <div class="project-card-header" style="background: linear-gradient(135deg, #1a2800, #2e4a00);">
+            <div class="project-flag-row">
+              <span class="project-flag" aria-label="Mongolia">🇲🇳</span>
+              <span class="featured-badge" aria-label="Flagship project">★ FLAGSHIP</span>
+            </div>
+            <span class="project-type-badge">BIOCHAR CDR</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Bio-SALAM 1 Biochar Project</h3>
+            <p>Mongolia's premier biochar CDR initiative, converting rice and wheat residues through controlled pyrolysis. The largest-volume biochar removal project in Central Asia.</p>
+            <div class="project-tags" aria-label="Tags">
+              <span class="tag">VM0044</span>
+              <span class="tag">Verra VCS</span>
+              <span class="tag">Mongolia</span>
+            </div>
+            <div class="project-metric">
+              <span class="metric-label">Annual Removals</span>
+              <span class="metric-value">90,192 tCO₂e/yr</span>
+            </div>
+            <div class="project-status">
+              <span class="status-dot status-active" aria-hidden="true"></span>
+              <span class="status-label">Active</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Bio-Fertilizer Soil Carbon -->
+        <article class="project-card" role="listitem">
+          <div class="project-card-header" style="background: linear-gradient(135deg, #3e2723, #5d4037);">
+            <div class="project-flag-row">
+              <span class="project-flag" aria-label="Mongolia">🇲🇳</span>
+            </div>
+            <span class="project-type-badge">SOIL CARBON</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Bio-Fertilizer Soil Carbon Enhancement</h3>
+            <p>Innovative bio-fertilizer application program enhancing soil organic carbon stocks across Mongolian agricultural lands.</p>
+            <div class="project-tags" aria-label="Tags">
+              <span class="tag">VM0042</span>
+              <span class="tag">Soil Carbon</span>
+              <span class="tag">Mongolia</span>
+            </div>
+            <div class="project-metric">
+              <span class="metric-label">Annual Removals</span>
+              <span class="metric-value">52,287 tCO₂e/yr</span>
+            </div>
+            <div class="project-status">
+              <span class="status-dot status-development" aria-hidden="true"></span>
+              <span class="status-label">In Development</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div style="text-align:center; margin-top:2rem;">
+        <a href="projects.html" class="btn-blue">View Full Project Portfolio →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER ===================== -->
+  <section class="cta-banner" aria-labelledby="cta-biochar-heading">
+    <div class="container cta-banner-inner">
+      <span class="label-tag">Get Started</span>
+      <h2 id="cta-biochar-heading" class="animated-gradient-text">Ready to Invest in Durable Carbon Removal?</h2>
+      <p>Join the growing community of forward-thinking organisations sourcing high-quality biochar carbon credits from NatWorks Transformation.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-primary">Contact NatWorks</a>
+        <a href="https://natworks.co.in/" target="_blank" rel="noopener" class="btn-secondary">Visit natworks.co.in →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Col 1: Brand -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo footer-logo" aria-label="NatWorks Transformation Home">
+            <svg width="36" height="36" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="22" cy="22" r="21" stroke="rgba(102,187,106,0.2)" stroke-width="1"/>
+              <line x1="22" y1="8" x2="35" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="22" y1="8" x2="9" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="35" y1="18" x2="35" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+              <line x1="9" y1="18" x2="9" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+              <line x1="35" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="9" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="22" y1="8" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="35" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="9" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="35" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="9" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <circle cx="22" cy="8" r="3.5" fill="#66bb6a"/>
+              <circle cx="35" cy="18" r="3" fill="#2e7d32"/>
+              <circle cx="9" cy="18" r="3" fill="#2e7d32"/>
+              <circle cx="35" cy="30" r="3" fill="#66bb6a"/>
+              <circle cx="9" cy="30" r="3" fill="#66bb6a"/>
+              <circle cx="22" cy="38" r="3.5" fill="#2e7d32"/>
+              <circle cx="22" cy="22" r="4" fill="#e53935"/>
+              <circle cx="28" cy="14" r="2" fill="#e53935"/>
+            </svg>
+            <div class="logo-text">
+              <span><span class="nat">Nat</span><span class="works">Works</span></span>
+              <span class="tagline">Transformation</span>
+            </div>
+          </a>
+          <p class="footer-desc">Developing certified biochar carbon dioxide removal projects that convert agricultural residues into permanent carbon sinks — advancing a net-zero future across Asia and Africa.</p>
+        </div>
+
+        <!-- Col 2: Biochar -->
+        <nav class="footer-col" aria-label="Biochar pages">
+          <h4>Biochar</h4>
+          <ul role="list">
+            <li><a href="biochar.html">What is Biochar</a></li>
+            <li><a href="biochar.html#pyrolysis">Science of Pyrolysis</a></li>
+            <li><a href="biochar.html#cobenefits">Co-Benefits</a></li>
+            <li><a href="biochar.html#vm0044">VM0044 Methodology</a></li>
+          </ul>
+        </nav>
+
+        <!-- Col 3: Projects -->
+        <nav class="footer-col" aria-label="Projects pages">
+          <h4>Projects</h4>
+          <ul role="list">
+            <li><a href="projects.html">All Projects</a></li>
+            <li><a href="projects.html">Biochar CDR</a></li>
+            <li><a href="projects.html">Soil Carbon</a></li>
+            <li><a href="projects.html">Blue Carbon</a></li>
+          </ul>
+        </nav>
+
+        <!-- Col 4: Standards -->
+        <nav class="footer-col" aria-label="Carbon standards">
+          <h4>Standards</h4>
+          <ul role="list">
+            <li><a href="https://verra.org" target="_blank" rel="noopener">Verra VCS</a></li>
+            <li><a href="https://verra.org" target="_blank" rel="noopener">VM0044</a></li>
+            <li><a href="https://goldstandard.org" target="_blank" rel="noopener">Gold Standard</a></li>
+            <li><a href="projects.html">Afforestation</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 NatWorks Transformation. All rights reserved. | Advancing carbon removal for a net-zero future.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Animate stability bars when they scroll into view
+    (function () {
+      var bars = document.querySelectorAll('.stability-bar[data-width]');
+      if (!bars.length) return;
+
+      function animateBars(entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var bar = entry.target;
+            bar.style.width = bar.getAttribute('data-width') + '%';
+            observer.unobserve(bar);
+          }
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(animateBars, { threshold: 0.2 });
+        bars.forEach(function (bar) { observer.observe(bar); });
+      } else {
+        bars.forEach(function (bar) { bar.style.width = bar.getAttribute('data-width') + '%'; });
+      }
+    }());
+  </script>
+</body>
+</html>

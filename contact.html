@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact NatWorks Transformation — inquire about carbon credits, project partnerships, investment opportunities, or media requests.">
+  <meta property="og:title" content="Contact | NatWorks Transformation">
+  <title>Contact | NatWorks Transformation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── Contact page specific styles ── */
+
+    /* Form layout */
+    .contact-form-wrap {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(102,187,106,0.15);
+      border-radius: 18px;
+      padding: 2.5rem;
+    }
+    .contact-form-wrap h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 540px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.2rem;
+    }
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #a5d6a7;
+      letter-spacing: 0.03em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(102,187,106,0.2);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: rgba(102,187,106,0.6);
+      box-shadow: 0 0 0 3px rgba(102,187,106,0.1);
+    }
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2366bb6a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      cursor: pointer;
+    }
+    .form-group select option {
+      background: #0d1a10;
+      color: #ffffff;
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    /* Contact info panel */
+    .contact-info-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-info-wrap h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2rem;
+    }
+    .contact-info-wrap > p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .contact-info-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(102,187,106,0.15);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .contact-info-card:hover {
+      border-color: rgba(102,187,106,0.35);
+      transform: translateX(4px);
+    }
+    .contact-info-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .contact-info-card h3 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #66bb6a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 0.2rem;
+    }
+    .contact-info-card a,
+    .contact-info-card p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      margin: 0;
+      transition: color 0.2s;
+    }
+    .contact-info-card a:hover { color: #66bb6a; }
+
+    /* Partner section cards */
+    .partner-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .partner-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(102,187,106,0.15);
+      border-radius: 14px;
+      padding: 1.8rem;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .partner-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(102,187,106,0.35);
+    }
+    .partner-card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .partner-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #66bb6a;
+      margin-bottom: 0.6rem;
+    }
+    .partner-card p {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Submit button full-width override */
+    .btn-submit-full {
+      width: 100%;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="logo" aria-label="NatWorks Transformation Home">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="22" cy="22" r="21" stroke="rgba(102,187,106,0.2)" stroke-width="1"/>
+        <line x1="22" y1="8" x2="35" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="22" y1="8" x2="9" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="35" y1="18" x2="35" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+        <line x1="9" y1="18" x2="9" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+        <line x1="35" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="9" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+        <line x1="22" y1="8" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="35" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="9" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="35" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <line x1="9" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+        <circle cx="22" cy="8" r="3.5" fill="#66bb6a"/>
+        <circle cx="35" cy="18" r="3" fill="#2e7d32"/>
+        <circle cx="9" cy="18" r="3" fill="#2e7d32"/>
+        <circle cx="35" cy="30" r="3" fill="#66bb6a"/>
+        <circle cx="9" cy="30" r="3" fill="#66bb6a"/>
+        <circle cx="22" cy="38" r="3.5" fill="#2e7d32"/>
+        <circle cx="22" cy="22" r="4" fill="#e53935"/>
+        <circle cx="28" cy="14" r="2" fill="#e53935"/>
+      </svg>
+      <div class="logo-text">
+        <span><span class="nat">Nat</span><span class="works">Works</span></span>
+        <span class="tagline">Transformation</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="biochar.html">What is Biochar</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="index.html#impact">Impact</a></li>
+      <li><a href="index.html#methodology">Methodology</a></li>
+      <li><a href="contact.html" aria-current="page">Contact</a></li>
+      <li><a href="https://natworks.co.in/" target="_blank" rel="noopener" class="nav-cta" aria-label="Visit NatWorks main website">Visit NatWorks →</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" style="min-height: 55vh;" aria-label="Contact hero">
+    <div id="particles" class="particle-container" aria-hidden="true"></div>
+    <div class="carbon-ring-bg" aria-hidden="true">
+      <div class="carbon-ring carbon-ring-1"></div>
+      <div class="carbon-ring carbon-ring-2"></div>
+      <div class="carbon-ring carbon-ring-3"></div>
+    </div>
+    <div class="hero-content">
+      <span class="label-tag hero-animate-1">💬 Get In Touch</span>
+      <h1 class="hero-animate-2">Connect with <span class="animated-gradient-text">NatWorks</span></h1>
+      <p class="hero-animate-3">
+        Whether you're seeking carbon credits, exploring project partnerships, or learning about biochar CDR investment — we'd love to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT SECTION ===================== -->
+  <section class="section" aria-labelledby="contact-section-heading">
+    <div class="container">
+      <h2 id="contact-section-heading" class="sr-only">Contact Form and Information</h2>
+      <div class="two-col" style="gap: 3rem; align-items: flex-start;">
+
+        <!-- LEFT: Contact form -->
+        <div class="reveal-left contact-form-wrap">
+          <h2>Send a Message</h2>
+
+          <form id="contactForm" novalidate aria-label="Contact form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Your full name"
+                  aria-required="true"
+                  autocomplete="name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="org">Organization</label>
+                <input
+                  type="text"
+                  id="org"
+                  name="organization"
+                  placeholder="Company or institution"
+                  autocomplete="organization"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="your@email.com"
+                aria-required="true"
+                autocomplete="email"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject *</label>
+              <select id="subject" name="subject" required aria-required="true">
+                <option value="" disabled selected>Select inquiry type...</option>
+                <option value="carbon-credits">Carbon Credit Inquiry</option>
+                <option value="partnership">Project Partnership</option>
+                <option value="investment">Investment Opportunity</option>
+                <option value="media">Media &amp; Press</option>
+                <option value="research">Research Collaboration</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message *</label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows="6"
+                placeholder="Tell us about your interest in biochar CDR or how we can collaborate..."
+                aria-required="true"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary btn-submit-full">Send Message →</button>
+
+            <div
+              id="formStatus"
+              role="status"
+              aria-live="polite"
+              style="margin-top: 1rem; display: none;"
+            ></div>
+          </form>
+        </div>
+
+        <!-- RIGHT: Info panel -->
+        <div class="reveal-right contact-info-wrap">
+          <h2>Get in Touch</h2>
+
+          <p>
+            NatWorks Transformation develops and manages a growing portfolio of certified carbon removal and reduction projects. We work with corporate buyers seeking high-quality carbon credits, development finance institutions, agricultural cooperatives, and impact investors committed to climate action.
+          </p>
+          <p>
+            Our team has expertise spanning carbon project development, Verra and Gold Standard certification, soil science, agricultural extension, and carbon market finance.
+          </p>
+
+          <div class="contact-info-cards">
+
+            <div class="contact-info-card">
+              <span class="contact-info-icon" aria-hidden="true">🌐</span>
+              <div>
+                <h3>Website</h3>
+                <a href="https://natworks.co.in/" target="_blank" rel="noopener">natworks.co.in</a>
+              </div>
+            </div>
+
+            <div class="contact-info-card">
+              <span class="contact-info-icon" aria-hidden="true">✉️</span>
+              <div>
+                <h3>Email</h3>
+                <p>info@natworks.co.in</p>
+              </div>
+            </div>
+
+            <div class="contact-info-card">
+              <span class="contact-info-icon" aria-hidden="true">💼</span>
+              <div>
+                <h3>LinkedIn</h3>
+                <a href="https://linkedin.com/company/natworks" target="_blank" rel="noopener">NatWorks Transformation</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY PARTNER ===================== -->
+  <section class="section section-alt" aria-labelledby="partner-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Partnership</span>
+        <h2 id="partner-heading">Why Partner With <span class="gradient-text">NatWorks?</span></h2>
+      </div>
+
+      <div class="partner-cards-grid">
+
+        <div class="partner-card reveal">
+          <span class="partner-card-icon" aria-hidden="true">🏆</span>
+          <h3>Verified &amp; Certified Quality</h3>
+          <p>Every NatWorks project is developed to the highest carbon market standards — Verra VCS, VM0044, Gold Standard — ensuring your carbon credit purchases represent real, additional, permanent, and verifiable removals.</p>
+        </div>
+
+        <div class="partner-card reveal">
+          <span class="partner-card-icon" aria-hidden="true">🌍</span>
+          <h3>Diverse Project Portfolio</h3>
+          <p>With projects across Mongolia, Egypt, Côte d'Ivoire, and Tanzania spanning biochar CDR, soil carbon, mangroves, and clean energy, we offer buyers a diversified portfolio of climate solutions from credible, high-impact geographies.</p>
+        </div>
+
+        <div class="partner-card reveal">
+          <span class="partner-card-icon" aria-hidden="true">📈</span>
+          <h3>Transparent Impact Reporting</h3>
+          <p>We provide buyers with detailed project monitoring reports, satellite verification data, and community benefit documentation — enabling credible corporate climate disclosures and stakeholder communications.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER ===================== -->
+  <section class="cta-banner" aria-labelledby="cta-contact-heading">
+    <div class="container cta-banner-inner">
+      <span class="label-tag">Get Started</span>
+      <h2 id="cta-contact-heading" class="animated-gradient-text">Ready to Invest in Durable Carbon Removal?</h2>
+      <p>Join the growing community of forward-thinking organisations sourcing high-quality biochar carbon credits from NatWorks Transformation.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-primary">Contact NatWorks</a>
+        <a href="https://natworks.co.in/" target="_blank" rel="noopener" class="btn-secondary">Visit natworks.co.in →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Col 1: Brand -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo footer-logo" aria-label="NatWorks Transformation Home">
+            <svg width="36" height="36" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="22" cy="22" r="21" stroke="rgba(102,187,106,0.2)" stroke-width="1"/>
+              <line x1="22" y1="8" x2="35" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="22" y1="8" x2="9" y2="18" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="35" y1="18" x2="35" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+              <line x1="9" y1="18" x2="9" y2="30" stroke="#66bb6a" stroke-width="1.5"/>
+              <line x1="35" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="9" y1="30" x2="22" y2="38" stroke="#2e7d32" stroke-width="1.5"/>
+              <line x1="22" y1="8" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="35" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="9" y1="18" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="35" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <line x1="9" y1="30" x2="22" y2="22" stroke="#1a73e8" stroke-width="1"/>
+              <circle cx="22" cy="8" r="3.5" fill="#66bb6a"/>
+              <circle cx="35" cy="18" r="3" fill="#2e7d32"/>
+              <circle cx="9" cy="18" r="3" fill="#2e7d32"/>
+              <circle cx="35" cy="30" r="3" fill="#66bb6a"/>
+              <circle cx="9" cy="30" r="3" fill="#66bb6a"/>
+              <circle cx="22" cy="38" r="3.5" fill="#2e7d32"/>
+              <circle cx="22" cy="22" r="4" fill="#e53935"/>
+              <circle cx="28" cy="14" r="2" fill="#e53935"/>
+            </svg>
+            <div class="logo-text">
+              <span><span class="nat">Nat</span><span class="works">Works</span></span>
+              <span class="tagline">Transformation</span>
+            </div>
+          </a>
+          <p class="footer-desc">Developing certified biochar carbon dioxide removal projects that convert agricultural residues into permanent carbon sinks — advancing a net-zero future across Asia and Africa.</p>
+        </div>
+
+        <!-- Col 2: Biochar -->
+        <nav class="footer-col" aria-label="Biochar pages">
+          <h4>Biochar</h4>
+          <ul role="list">
+            <li><a href="biochar.html">What is Biochar</a></li>
+            <li><a href="biochar.html#pyrolysis">Science of Pyrolysis</a></li>
+            <li><a href="biochar.html#cobenefits">Co-Benefits</a></li>
+            <li><a href="biochar.html#vm0044">VM0044 Methodology</a></li>
+          </ul>
+        </nav>
+
+        <!-- Col 3: Projects -->
+        <nav class="footer-col" aria-label="Projects pages">
+          <h4>Projects</h4>
+          <ul role="list">
+            <li><a href="projects.html">All Projects</a></li>
+            <li><a href="projects.html">Biochar CDR</a></li>
+            <li><a href="projects.html">Soil Carbon</a></li>
+            <li><a href="projects.html">Blue Carbon</a></li>
+          </ul>
+        </nav>
+
+        <!-- Col 4: Standards -->
+        <nav class="footer-col" aria-label="Carbon standards">
+          <h4>Standards</h4>
+          <ul role="list">
+            <li><a href="https://verra.org" target="_blank" rel="noopener">Verra VCS</a></li>
+            <li><a href="https://verra.org" target="_blank" rel="noopener">VM0044</a></li>
+            <li><a href="https://goldstandard.org" target="_blank" rel="noopener">Gold Standard</a></li>
+            <li><a href="projects.html">Afforestation</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 NatWorks Transformation. All rights reserved. | Advancing carbon removal for a net-zero future.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name    = document.getElementById('name')?.value.trim();
+      var email   = document.getElementById('email')?.value.trim();
+      var subject = document.getElementById('subject')?.value;
+      var message = document.getElementById('message')?.value.trim();
+      var status  = document.getElementById('formStatus');
+
+      // Basic required-field validation
+      if (!name || !email || !subject || !message) {
+        if (status) {
+          status.style.display    = 'block';
+          status.style.color      = '#e53935';
+          status.style.background = 'rgba(229,57,53,0.1)';
+          status.style.border     = '1px solid rgba(229,57,53,0.3)';
+          status.style.borderRadius = '8px';
+          status.style.padding    = '1rem';
+          status.textContent      = 'Please fill in all required fields.';
+        }
+        return;
+      }
+
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        if (status) {
+          status.style.display    = 'block';
+          status.style.color      = '#e53935';
+          status.style.background = 'rgba(229,57,53,0.1)';
+          status.style.border     = '1px solid rgba(229,57,53,0.3)';
+          status.style.borderRadius = '8px';
+          status.style.padding    = '1rem';
+          status.textContent      = 'Please enter a valid email address.';
+        }
+        return;
+      }
+
+      // Success state
+      if (status) {
+        status.style.display    = 'block';
+        status.style.color      = '#66bb6a';
+        status.style.background = 'rgba(102,187,106,0.1)';
+        status.style.border     = '1px solid rgba(102,187,106,0.3)';
+        status.style.borderRadius = '8px';
+        status.style.padding    = '1rem';
+        status.textContent      = '✅ Thank you for your message! The NatWorks team will be in touch shortly.';
+      }
+      this.reset();
+    });
+  </script>
+</body>
+</html>
