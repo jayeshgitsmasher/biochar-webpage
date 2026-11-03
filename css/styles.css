@@ -175,28 +175,38 @@ nav.navbar.scrolled {
   text-decoration: none;
 }
 
-.logo-text .nat {
-  color: #1a73e8;
-  font-weight: 800;
-  font-size: 1.4rem;
-  font-family: 'Montserrat', sans-serif;
+.logo-img {
+  display: block;
+  height: 52px;
+  width: auto;
 }
 
-.logo-text .works {
+.footer-logo .logo-img {
+  height: 64px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo-text .logo-name {
   color: #ffffff;
-  font-weight: 800;
-  font-size: 1.4rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
 }
 
 .logo-text .tagline {
-  display: block;
-  font-size: 0.55rem;
-  letter-spacing: 0.35em;
-  color: #9e9e9e;
+  margin-top: 6px;
+  color: #7f8fa6;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  margin-top: -2px;
 }
 
 /* Nav links */

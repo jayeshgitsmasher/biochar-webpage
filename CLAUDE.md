@@ -18,7 +18,7 @@ python -m http.server 8000
 
 Four pages share one layout: `index.html`, `biochar.html`, `projects.html`, `contact.html`.
 
-- **No templating / shared partials.** The navbar (including the inline SVG logo) and the footer are copy-pasted into every page. Any nav, footer, logo, or copyright change must be made in all four files.
+- **No templating / shared partials.** The navbar (including the logo `<img>`, `images/natworks-logo-light.png`) and the footer are copy-pasted into every page. Any nav, footer, logo, or copyright change must be made in all four files.
 - **CSS layering:** every page loads `css/styles.css` (design tokens in `:root` — colors, gradients, spacing, font sizes, radii — plus all shared components) and `css/animations.css` (keyframes and `.reveal*` / `.hero-animate-*` classes). `biochar.html`, `projects.html`, and `contact.html` also have a large page-specific `<style>` block in `<head>`. Use the `:root` custom properties rather than hard-coding colors.
 - **`js/main.js`** is loaded on every page and drives behavior through markup conventions, so most features are added by writing HTML, not JS:
   - `.reveal`, `.reveal-left`, `.reveal-right` → get `.visible` when scrolled into view.
