@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How NatWorks Transformation develops biochar carbon removal projects under Verra VM0044 — eligibility, project workplan, quantification, permanence, MRV and project development tools.">
+  <meta property="og:title" content="Methodology &amp; Tools | NatWorks Transformation">
+  <title>Methodology &amp; Tools | NatWorks Transformation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── Page-specific styles ── */
+
+    /* Hero: clear the fixed navbar so the two-line title isn't clipped */
+    .hero {
+      padding: 140px 0 4rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 4.2vw, 3.4rem);
+    }
+
+    /* In-page section nav */
+    .page-subnav {
+      position: sticky;
+      top: 70px;
+      z-index: 900;
+      background: rgba(10, 15, 13, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+      overflow-x: auto;
+    }
+    .page-subnav ul {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      white-space: nowrap;
+    }
+    .page-subnav a {
+      display: inline-block;
+      color: var(--color-green-soft);
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-full);
+      border: 1px solid transparent;
+      transition: var(--transition-fast);
+    }
+    .page-subnav a:hover {
+      border-color: rgba(102, 187, 106, 0.35);
+      background: rgba(102, 187, 106, 0.08);
+      color: var(--color-green-light);
+    }
+
+    /* Eligibility checklist */
+    .eligibility-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .elig-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      transition: var(--transition-base);
+    }
+    .elig-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(102, 187, 106, 0.4);
+    }
+    .elig-card h3 {
+      font-size: var(--fs-md);
+      color: var(--color-green-light);
+      margin: 0.6rem 0 0.75rem;
+    }
+    .elig-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .elig-card li {
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.55;
+      padding-left: 1.4rem;
+      position: relative;
+    }
+    .elig-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--color-green-light);
+      font-weight: 700;
+    }
+    .elig-card li.excluded::before {
+      content: '✕';
+      color: var(--color-red);
+    }
+    .elig-icon { font-size: 1.8rem; }
+
+    /* Workplan timeline */
+    .workplan {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .workplan::before {
+      content: '';
+      position: absolute;
+      left: 27px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--color-green), var(--color-blue));
+      opacity: 0.5;
+    }
+    .phase {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 1.5rem;
+      position: relative;
+    }
+    .phase-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--color-bg-primary);
+      border: 2px solid var(--color-green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      color: var(--color-green-light);
+      position: relative;
+      z-index: 1;
+    }
+    .phase-body {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 1.5rem 1.75rem;
+    }
+    .phase-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem 1rem;
+      margin-bottom: 0.6rem;
+    }
+    .phase-head h3 {
+      font-size: var(--fs-xl);
+      color: var(--color-white);
+    }
+    .phase-duration {
+      font-size: var(--fs-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-blue-light);
+      background: rgba(26, 115, 232, 0.12);
+      border: 1px solid rgba(66, 165, 245, 0.3);
+      border-radius: var(--radius-full);
+      padding: 0.2rem 0.75rem;
+    }
+    .phase-body > p {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.68);
+      margin-bottom: 1rem;
+    }
+    .phase-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .phase-cols h4 {
+      font-size: var(--fs-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-green-muted);
+      margin-bottom: 0.5rem;
+    }
+    .phase-cols ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .phase-cols li {
+      font-size: 0.83rem;
+      color: var(--color-green-soft);
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .phase-cols li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--color-green-light);
+      font-weight: 700;
+    }
+    @media (max-width: 700px) {
+      .phase-cols { grid-template-columns: 1fr; }
+      .phase { grid-template-columns: 44px 1fr; gap: 1rem; }
+      .phase-num { width: 44px; height: 44px; font-size: var(--fs-sm); }
+      .workplan::before { left: 21px; }
+      .phase-body { padding: 1.25rem; }
+    }
+
+    /* Quantification */
+    .equation-box {
+      background: var(--color-bg-deep);
+      border: 1px solid rgba(102, 187, 106, 0.3);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .equation {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1rem, 2.4vw, 1.5rem);
+      font-weight: 700;
+      color: var(--color-white);
+      line-height: 1.6;
+    }
+    .equation .t-green { color: var(--color-green-light); }
+    .equation .t-blue  { color: var(--color-blue-light); }
+    .equation .t-red   { color: #ef5350; }
+    .equation-note {
+      font-size: var(--fs-sm);
+      color: var(--color-green-muted);
+      margin-top: 0.75rem;
+    }
+    .term-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.25rem;
+    }
+    .term-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--color-border);
+      border-top: 3px solid var(--term-color, var(--color-green-light));
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+    }
+    .term-card code {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: var(--fs-md);
+      color: var(--term-color, var(--color-green-light));
+    }
+    .term-card h3 {
+      font-size: 0.95rem;
+      color: var(--color-white);
+      margin: 0.4rem 0 0.5rem;
+    }
+    .term-card p {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.6;
+    }
+
+    /* Permanence */
+    .perm-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    .perm-table th,
+    .perm-table td {
+      text-align: left;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .perm-table th {
+      font-size: var(--fs-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-green-muted);
+    }
+    .perm-table td { color: rgba(255, 255, 255, 0.75); }
+    .perm-table td:first-child { color: var(--color-green-soft); font-weight: 600; }
+    .table-wrap {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 0.5rem;
+      overflow-x: auto;
+    }
+
+    /* MRV */
+    .mrv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .mrv-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+    }
+    .mrv-card .mrv-icon { font-size: 1.6rem; display: block; margin-bottom: 0.5rem; }
+    .mrv-card h3 { font-size: 0.95rem; color: var(--color-green-light); margin-bottom: 0.4rem; }
+    .mrv-card p { font-size: 0.82rem; color: rgba(255, 255, 255, 0.65); line-height: 1.55; margin-bottom: 0.6rem; }
+    .mrv-freq {
+      font-size: var(--fs-xs);
+      font-weight: 700;
+      color: var(--color-blue-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Tools */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .tool-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-base);
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(102, 187, 106, 0.4);
+      box-shadow: var(--shadow-card);
+    }
+    .tool-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-lg);
+      background: rgba(102, 187, 106, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .tool-card h3 { font-size: var(--fs-lg); color: var(--color-white); margin-bottom: 0.5rem; }
+    .tool-card > p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.65); line-height: 1.6; margin-bottom: 1rem; }
+    .tool-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; margin-top: auto; }
+    .tool-card li {
+      font-size: 0.8rem;
+      color: var(--color-green-soft);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .tool-card li::before { content: '✓'; position: absolute; left: 0; color: var(--color-green-light); }
+    .tool-stage {
+      font-size: var(--fs-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-gold);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Estimator */
+    .estimator {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      background: var(--color-bg-deep);
+      border: 1px solid rgba(102, 187, 106, 0.3);
+      border-radius: var(--radius-2xl);
+      padding: 2rem;
+    }
+    .est-field { margin-bottom: 1.4rem; }
+    .est-field label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-green-soft);
+      margin-bottom: 0.45rem;
+    }
+    .est-field output { color: var(--color-white); font-weight: 700; }
+    .est-field input[type="range"] {
+      width: 100%;
+      accent-color: var(--color-green-light);
+    }
+    .est-field select,
+    .est-field input[type="number"] {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      color: var(--color-text);
+      padding: 0.6rem 0.8rem;
+      font: inherit;
+      font-size: 0.9rem;
+    }
+    .est-field select option { background: var(--color-bg-secondary); }
+    .est-hint { font-size: 0.75rem; color: var(--color-green-muted); margin-top: 0.3rem; }
+    .est-result {
+      background: rgba(46, 125, 50, 0.12);
+      border: 1px solid rgba(102, 187, 106, 0.3);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .est-big {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      background: var(--gradient-stat);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    .est-unit { font-size: 0.85rem; color: var(--color-green-soft); margin-bottom: 1.25rem; }
+    .est-breakdown { list-style: none; border-top: 1px solid var(--color-border); padding-top: 1rem; }
+    .est-breakdown li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.3rem 0;
+    }
+    .est-breakdown li span:last-child { color: var(--color-white); font-weight: 600; }
+    .est-disclaimer { font-size: 0.75rem; color: var(--color-green-muted); margin-top: 1rem; line-height: 1.5; }
+    @media (max-width: 900px) {
+      .estimator { grid-template-columns: 1fr; padding: 1.5rem; }
+    }
+
+    .info-callout {
+      background: rgba(46, 125, 50, 0.12);
+      border: 1px solid rgba(102, 187, 106, 0.25);
+      border-left: 4px solid var(--color-green-light);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.2rem;
+      margin-top: 2rem;
+      font-size: 0.88rem;
+      color: var(--color-green-soft);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="logo" aria-label="NatWorks Transformation Home">
+      <img src="images/natworks-logo-light.png" alt="NatWorks Transformation" class="logo-img" width="639" height="285">
+      <div class="logo-text">
+        <span class="logo-name">NatWorks</span>
+        <span class="tagline">Transformation</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="biochar.html">What is Biochar</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="index.html#impact">Impact</a></li>
+      <li><a href="methodology.html" aria-current="page">Methodology</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="https://natworks.co.in/" target="_blank" rel="noopener" class="nav-cta" aria-label="Visit NatWorks main website">Visit NatWorks →</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" style="min-height: 65vh;" aria-label="Methodology hero">
+    <div id="particles" class="particle-container" aria-hidden="true"></div>
+    <div class="carbon-ring-bg" aria-hidden="true">
+      <div class="carbon-ring carbon-ring-1"></div>
+      <div class="carbon-ring carbon-ring-2"></div>
+      <div class="carbon-ring carbon-ring-3"></div>
+    </div>
+    <div class="hero-content">
+      <span class="label-tag hero-animate-1">📐 Verra VM0044</span>
+      <h1 class="hero-animate-2">Methodology &amp; <span class="animated-gradient-text">Project Development</span></h1>
+      <p class="hero-animate-3">
+        How NatWorks takes a biochar project from feedstock assessment to issued carbon credits: eligibility, workplan, quantification, permanence, monitoring, and the tools we use at every stage.
+      </p>
+      <div class="hero-btns hero-animate-4">
+        <a href="#workplan" class="btn-primary">View the Workplan</a>
+        <a href="#tools" class="btn-secondary">Our Development Tools</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== IN-PAGE NAV ===================== -->
+  <nav class="page-subnav" aria-label="On this page">
+    <ul role="list">
+      <li><a href="#eligibility">Eligibility</a></li>
+      <li><a href="#workplan">Workplan</a></li>
+      <li><a href="#quantification">Quantification</a></li>
+      <li><a href="#permanence">Permanence</a></li>
+      <li><a href="#mrv">Monitoring (MRV)</a></li>
+      <li><a href="#tools">Development Tools</a></li>
+      <li><a href="#estimator">Removal Estimator</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===================== SECTION 1: ELIGIBILITY ===================== -->
+  <section id="eligibility" class="section" aria-labelledby="eligibility-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Step Zero</span>
+        <h2 id="eligibility-heading">Is the Project <span class="gradient-text">Eligible?</span></h2>
+        <p>VM0044 sets clear applicability conditions. We screen every candidate site against them before any further investment is made.</p>
+      </div>
+
+      <div class="eligibility-grid">
+
+        <div class="elig-card reveal">
+          <span class="elig-icon" aria-hidden="true">🌾</span>
+          <h3>Feedstock</h3>
+          <ul>
+            <li>Waste or residual biomass: crop residues, forestry and sawmill residues, prunings, husks, shells</li>
+            <li>Sustainable sourcing documented, with no competing use displaced</li>
+            <li class="excluded">Biomass grown on land cleared or converted for the project</li>
+            <li class="excluded">Contaminated or treated wood and mixed municipal waste</li>
+          </ul>
+        </div>
+
+        <div class="elig-card reveal">
+          <span class="elig-icon" aria-hidden="true">🔥</span>
+          <h3>Production Technology</h3>
+          <ul>
+            <li>Pyrolysis or gasification in an oxygen-limited environment</li>
+            <li>Process temperature monitored and recorded for every batch</li>
+            <li>Pyrolysis gases combusted or captured, not vented</li>
+            <li>Facility permitted and operated to local environmental rules</li>
+          </ul>
+        </div>
+
+        <div class="elig-card reveal">
+          <span class="elig-icon" aria-hidden="true">🧪</span>
+          <h3>Biochar Quality</h3>
+          <ul>
+            <li>Molar H:C<sub>org</sub> ratio below 0.7</li>
+            <li>Organic carbon content measured by accredited laboratory</li>
+            <li>Heavy metals and PAHs within IBI / EBC or national limits</li>
+            <li>Representative sampling per production batch</li>
+          </ul>
+        </div>
+
+        <div class="elig-card reveal">
+          <span class="elig-icon" aria-hidden="true">📍</span>
+          <h3>End Use</h3>
+          <ul>
+            <li>Applied to soil (agriculture, horticulture, land restoration)</li>
+            <li>Or incorporated into durable non-soil products (e.g. concrete, asphalt)</li>
+            <li>End-use traceable through delivery and application records</li>
+            <li class="excluded">Combustion or use as fuel at any point</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 2: WORKPLAN ===================== -->
+  <section id="workplan" class="section section-alt" aria-labelledby="workplan-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Biochar Workplan</span>
+        <h2 id="workplan-heading">From Site to <span class="gradient-text">Issued Credits</span></h2>
+        <p>Our six-phase development workplan for every NatWorks biochar project. Each phase has defined activities, deliverables, and a go / no-go gate.</p>
+      </div>
+
+      <ol class="workplan" role="list">
+
+        <li class="phase reveal">
+          <div class="phase-num" aria-hidden="true">01</div>
+          <div class="phase-body">
+            <div class="phase-head">
+              <h3>Feasibility &amp; Feedstock Assessment</h3>
+              <span class="phase-duration">1–2 months</span>
+            </div>
+            <p>Confirm that enough eligible biomass exists, that it can be collected economically, and that the project passes VM0044 applicability.</p>
+            <div class="phase-cols">
+              <div>
+                <h4>Activities</h4>
+                <ul>
+                  <li>Biomass resource mapping and seasonal availability</li>
+                  <li>Competing-use and leakage screening</li>
+                  <li>Site, logistics and offtake (end-user) scoping</li>
+                  <li>Preliminary removal and revenue model</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Deliverables</h4>
+                <ul>
+                  <li>Feasibility report</li>
+                  <li>Feedstock inventory and sourcing plan</li>
+                  <li>Eligibility checklist and go / no-go decision</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="phase reveal">
+          <div class="phase-num" aria-hidden="true">02</div>
+          <div class="phase-body">
+            <div class="phase-head">
+              <h3>Project Design &amp; Documentation</h3>
+              <span class="phase-duration">2–4 months</span>
+            </div>
+            <p>Design the production system and write the Project Description (PD) that defines boundaries, baseline, additionality and monitoring.</p>
+            <div class="phase-cols">
+              <div>
+                <h4>Activities</h4>
+                <ul>
+                  <li>Pyrolysis technology selection and sizing</li>
+                  <li>Project boundary, baseline and additionality analysis</li>
+                  <li>Monitoring plan and sampling protocol design</li>
+                  <li>Local stakeholder consultation and safeguards review</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Deliverables</h4>
+                <ul>
+                  <li>VCS Project Description</li>
+                  <li>Emission-reduction calculation workbook</li>
+                  <li>Monitoring plan and SOPs</li>
+                  <li>Verra pipeline listing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="phase reveal">
+          <div class="phase-num" aria-hidden="true">03</div>
+          <div class="phase-body">
+            <div class="phase-head">
+              <h3>Validation &amp; Registration</h3>
+              <span class="phase-duration">3–6 months</span>
+            </div>
+            <p>An accredited Validation/Verification Body (VVB) independently assesses the PD against VCS rules and VM0044 before Verra registers the project.</p>
+            <div class="phase-cols">
+              <div>
+                <h4>Activities</h4>
+                <ul>
+                  <li>VVB selection and contracting</li>
+                  <li>Document review and site visit</li>
+                  <li>Responding to findings (CARs / CLs)</li>
+                  <li>Public comment period on the Verra registry</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Deliverables</h4>
+                <ul>
+                  <li>Validation report</li>
+                  <li>Registered project on Verra registry</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="phase reveal">
+          <div class="phase-num" aria-hidden="true">04</div>
+          <div class="phase-body">
+            <div class="phase-head">
+              <h3>Production &amp; Application</h3>
+              <span class="phase-duration">Ongoing</span>
+            </div>
+            <p>Commission the facility, train operators, and run the feedstock → pyrolysis → biochar → end-use supply chain under the monitoring plan.</p>
+            <div class="phase-cols">
+              <div>
+                <h4>Activities</h4>
+                <ul>
+                  <li>Facility commissioning and operator training</li>
+                  <li>Batch production with temperature logging</li>
+                  <li>Batch sampling and laboratory analysis</li>
+                  <li>Delivery to and application by farmers / end users</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Deliverables</h4>
+                <ul>
+                  <li>Batch production records</li>
+                  <li>Lab certificates of analysis</li>
+                  <li>Delivery and application records</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="phase reveal">
+          <div class="phase-num" aria-hidden="true">05</div>
+          <div class="phase-body">
+            <div class="phase-head">
+              <h3>Monitoring &amp; Reporting</h3>
+              <span class="phase-duration">Each monitoring period</span>
+            </div>
+            <p>Collect and quality-check all monitored parameters, calculate net removals, and compile the monitoring report for the period.</p>
+            <div class="phase-cols">
+              <div>
+                <h4>Activities</h4>
+                <ul>
+                  <li>Data QA/QC and reconciliation of mass balances</li>
+                  <li>Project emissions and leakage calculation</li>
+                  <li>Permanence factor application</li>
+                  <li>Internal audit before submission</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Deliverables</h4>
+                <ul>
+                  <li>Monitoring report</li>
+                  <li>Updated calculation workbook</li>
+                  <li>Evidence pack for the VVB</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="phase reveal">
+          <div class="phase-num" aria-hidden="true">06</div>
+          <div class="phase-body">
+            <div class="phase-head">
+              <h3>Verification &amp; Issuance</h3>
+              <span class="phase-duration">2–4 months per cycle</span>
+            </div>
+            <p>A VVB verifies the monitoring report. Verra then issues Verified Carbon Units (VCUs) for the net removals, ready for sale or retirement.</p>
+            <div class="phase-cols">
+              <div>
+                <h4>Activities</h4>
+                <ul>
+                  <li>Verification audit and site visit</li>
+                  <li>Closing findings</li>
+                  <li>Issuance request to Verra</li>
+                  <li>Buyer reporting and credit retirement support</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Deliverables</h4>
+                <ul>
+                  <li>Verification report</li>
+                  <li>VCUs issued on the Verra registry</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+      </ol>
+
+      <p class="info-callout" style="max-width:960px; margin-left:auto; margin-right:auto;">
+        <strong>Typical time to first issuance:</strong> 12–18 months from feasibility start. Durations are indicative and depend on facility build time, VVB availability, and registry review queues.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 3: QUANTIFICATION ===================== -->
+  <section id="quantification" class="section" aria-labelledby="quantification-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Quantification</span>
+        <h2 id="quantification-heading">How Carbon Removal Is <span class="gradient-text">Calculated</span></h2>
+        <p>Credits are issued only for the carbon that stays locked in biochar over the long term, after every project-related emission is deducted.</p>
+      </div>
+
+      <div class="equation-box reveal">
+        <div class="equation">
+          <span class="t-green">CR</span> =
+          <span class="t-green">Σ ( M<sub>biochar</sub> × C<sub>org</sub> × PF )</span> × <sup>44</sup>⁄<sub>12</sub>
+          − <span class="t-red">PE</span> − <span class="t-red">LE</span>
+        </div>
+        <p class="equation-note">Simplified form of the VM0044 net removal equation, summed over all biochar batches in a monitoring period (tCO₂e).</p>
+      </div>
+
+      <div class="term-grid">
+        <div class="term-card reveal">
+          <code>M<sub>biochar</sub></code>
+          <h3>Biochar Mass</h3>
+          <p>Dry mass of biochar produced and delivered to an eligible end use in each batch, measured on calibrated scales and adjusted for moisture.</p>
+        </div>
+        <div class="term-card reveal">
+          <code>C<sub>org</sub></code>
+          <h3>Organic Carbon Content</h3>
+          <p>Fraction of the biochar's dry mass that is organic carbon, from accredited lab analysis of representative batch samples.</p>
+        </div>
+        <div class="term-card reveal" style="--term-color: var(--color-blue-light);">
+          <code>PF</code>
+          <h3>Permanence Factor</h3>
+          <p>Share of biochar carbon expected to remain after 100 years. It depends on H:C<sub>org</sub> ratio and the soil temperature at the application site.</p>
+        </div>
+        <div class="term-card reveal" style="--term-color: var(--color-blue-light);">
+          <code>44⁄12</code>
+          <h3>Carbon to CO₂</h3>
+          <p>Converts tonnes of carbon to tonnes of CO₂ using the molecular-weight ratio of CO₂ to C.</p>
+        </div>
+        <div class="term-card reveal" style="--term-color: #ef5350;">
+          <code>PE</code>
+          <h3>Project Emissions</h3>
+          <p>Emissions from feedstock collection and transport, energy and fuel use, CH₄ and N₂O from pyrolysis, and transport of biochar to the end user.</p>
+        </div>
+        <div class="term-card reveal" style="--term-color: #ef5350;">
+          <code>LE</code>
+          <h3>Leakage</h3>
+          <p>Emissions caused outside the project boundary, for example if diverting biomass forces its previous users to switch to fossil alternatives.</p>
+        </div>
+      </div>
+
+      <p class="info-callout">
+        <strong>Conservative baseline:</strong> in the baseline scenario the residual biomass would decompose or be burned, returning its carbon to the atmosphere. Removals are therefore credited only for the stable biochar carbon. No credit is claimed for avoided burning or soil co-benefits.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 4: PERMANENCE ===================== -->
+  <section id="permanence" class="section section-alt" aria-labelledby="permanence-heading">
+    <div class="container">
+      <div class="two-col" style="align-items:start;">
+
+        <div class="reveal-left">
+          <span class="label-tag">Permanence</span>
+          <h2 id="permanence-heading">Built to Last <span class="gradient-text">Centuries</span></h2>
+          <p style="margin-top:1rem; color:rgba(255,255,255,0.72);">
+            Biochar's aromatic carbon structure decomposes extremely slowly, but not at zero. VM0044 accounts for this with a permanence factor that discounts the small share of carbon expected to be lost over a 100-year horizon.
+          </p>
+          <p style="margin-top:1rem; color:rgba(255,255,255,0.72);">
+            Two variables drive the factor. The first is the <strong>H:C<sub>org</sub> ratio</strong>: a lower ratio means a more condensed, stable structure, driven mainly by pyrolysis temperature. The second is the <strong>soil temperature</strong> where the biochar is applied: warmer soils mean faster microbial decay. NatWorks tightly controls the first and records the second for every application site.
+          </p>
+          <p class="info-callout">
+            We target pyrolysis temperatures above 500 °C so that H:C<sub>org</sub> sits well below the 0.7 eligibility limit. This maximises the permanence factor and the credits each tonne of biochar earns.
+          </p>
+        </div>
+
+        <div class="reveal-right">
+          <div class="table-wrap">
+            <table class="perm-table">
+              <caption class="sr-only" style="position:absolute; left:-9999px;">How permanence drivers affect crediting</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Driver</th>
+                  <th scope="col">Effect on PF</th>
+                  <th scope="col">How we manage it</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>H:C<sub>org</sub> ratio</td>
+                  <td>Lower ratio → higher PF</td>
+                  <td>Temperature-controlled pyrolysis, batch lab testing</td>
+                </tr>
+                <tr>
+                  <td>Pyrolysis temperature</td>
+                  <td>Higher temp → lower H:C<sub>org</sub></td>
+                  <td>Continuous thermocouple logging</td>
+                </tr>
+                <tr>
+                  <td>Soil temperature</td>
+                  <td>Cooler soils → higher PF</td>
+                  <td>Site-specific climate data per application area</td>
+                </tr>
+                <tr>
+                  <td>End use</td>
+                  <td>Durable products may differ from soil</td>
+                  <td>Application records and end-user agreements</td>
+                </tr>
+                <tr>
+                  <td>Reversal risk</td>
+                  <td>Combustion would release carbon</td>
+                  <td>Contractual no-burn commitments, traceability</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 5: MRV ===================== -->
+  <section id="mrv" class="section" aria-labelledby="mrv-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Monitoring, Reporting &amp; Verification</span>
+        <h2 id="mrv-heading">What We <span class="gradient-text">Monitor</span></h2>
+        <p>Every credited tonne traces back to measured data, from the field where biomass is collected to the field where biochar is applied.</p>
+      </div>
+
+      <div class="mrv-grid">
+        <div class="mrv-card reveal">
+          <span class="mrv-icon" aria-hidden="true">🚜</span>
+          <h3>Feedstock Intake</h3>
+          <p>Type, source, mass and moisture of every feedstock delivery; collection distances.</p>
+          <span class="mrv-freq">Every delivery</span>
+        </div>
+        <div class="mrv-card reveal">
+          <span class="mrv-icon" aria-hidden="true">🌡️</span>
+          <h3>Process Conditions</h3>
+          <p>Pyrolysis temperature and residence time, start-up fuel, electricity use.</p>
+          <span class="mrv-freq">Continuous / per batch</span>
+        </div>
+        <div class="mrv-card reveal">
+          <span class="mrv-icon" aria-hidden="true">⚖️</span>
+          <h3>Biochar Output</h3>
+          <p>Mass and moisture of biochar produced, with a unique batch ID for traceability.</p>
+          <span class="mrv-freq">Per batch</span>
+        </div>
+        <div class="mrv-card reveal">
+          <span class="mrv-icon" aria-hidden="true">🔬</span>
+          <h3>Lab Analysis</h3>
+          <p>Organic carbon, H:C<sub>org</sub>, ash, heavy metals and PAHs by an accredited laboratory.</p>
+          <span class="mrv-freq">Per sampling plan</span>
+        </div>
+        <div class="mrv-card reveal">
+          <span class="mrv-icon" aria-hidden="true">🚚</span>
+          <h3>Distribution</h3>
+          <p>Delivered quantities, transport mode and distance to each end user.</p>
+          <span class="mrv-freq">Every delivery</span>
+        </div>
+        <div class="mrv-card reveal">
+          <span class="mrv-icon" aria-hidden="true">📍</span>
+          <h3>Application</h3>
+          <p>GPS location, date, area and application rate; signed end-user declarations.</p>
+          <span class="mrv-freq">Every application</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 6: DEVELOPMENT TOOLS ===================== -->
+  <section id="tools" class="section section-alt" aria-labelledby="tools-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Project Development Tools</span>
+        <h2 id="tools-heading">The NatWorks <span class="gradient-text">Toolkit</span></h2>
+        <p>The tools we have built to develop, run and verify biochar projects faster, with fewer audit findings.</p>
+      </div>
+
+      <div class="tools-grid">
+
+        <article class="tool-card reveal">
+          <div class="tool-icon" aria-hidden="true">🗺️</div>
+          <span class="tool-stage">Phase 01 · Feasibility</span>
+          <h3>Feedstock &amp; Site Assessment</h3>
+          <p>A structured assessment of biomass availability, logistics and eligibility, producing a clear go / no-go recommendation.</p>
+          <ul>
+            <li>Biomass resource mapping</li>
+            <li>Competing-use and leakage screening</li>
+            <li>VM0044 applicability checklist</li>
+          </ul>
+        </article>
+
+        <article class="tool-card reveal">
+          <div class="tool-icon" aria-hidden="true">🧮</div>
+          <span class="tool-stage">Phase 01–02 · Design</span>
+          <h3>Carbon Removal Calculator</h3>
+          <p>A VM0044-aligned calculation model for ex-ante removal estimates, project emissions and credit revenue projections.</p>
+          <ul>
+            <li>Batch-level removal equations</li>
+            <li>Project emission and leakage modules</li>
+            <li>Scenario and sensitivity analysis</li>
+          </ul>
+        </article>
+
+        <article class="tool-card reveal">
+          <div class="tool-icon" aria-hidden="true">📄</div>
+          <span class="tool-stage">Phase 02 · Documentation</span>
+          <h3>PD &amp; Documentation Templates</h3>
+          <p>Pre-structured templates for the Project Description, monitoring plan and SOPs, aligned with VCS requirements.</p>
+          <ul>
+            <li>Project Description template</li>
+            <li>Additionality and baseline workbook</li>
+            <li>Stakeholder consultation records</li>
+          </ul>
+        </article>
+
+        <article class="tool-card reveal">
+          <div class="tool-icon" aria-hidden="true">📲</div>
+          <span class="tool-stage">Phase 04–05 · Operations</span>
+          <h3>Digital MRV System</h3>
+          <p>Field and plant data captured digitally, linking each biochar batch from feedstock to application in a single audit trail.</p>
+          <ul>
+            <li>Batch tracking with unique IDs</li>
+            <li>Mobile capture of deliveries and GPS-tagged applications</li>
+            <li>Automated QA/QC flags</li>
+          </ul>
+        </article>
+
+        <article class="tool-card reveal">
+          <div class="tool-icon" aria-hidden="true">🔬</div>
+          <span class="tool-stage">Phase 04 · Quality</span>
+          <h3>Sampling &amp; Lab Protocol</h3>
+          <p>Standardised sampling procedures and an accredited-lab workflow to keep biochar characterisation consistent and defensible.</p>
+          <ul>
+            <li>Representative sampling SOP</li>
+            <li>Chain-of-custody forms</li>
+            <li>Results feed straight into the calculator</li>
+          </ul>
+        </article>
+
+        <article class="tool-card reveal">
+          <div class="tool-icon" aria-hidden="true">✅</div>
+          <span class="tool-stage">Phase 05–06 · Verification</span>
+          <h3>Verification Readiness Kit</h3>
+          <p>Monitoring report templates, evidence-pack structure and an internal pre-audit checklist to shorten VVB review cycles.</p>
+          <ul>
+            <li>Monitoring report template</li>
+            <li>Evidence index and data room</li>
+            <li>Pre-verification internal audit</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 7: ESTIMATOR ===================== -->
+  <section id="estimator" class="section" aria-labelledby="estimator-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Try It</span>
+        <h2 id="estimator-heading">Biochar Removal <span class="gradient-text">Estimator</span></h2>
+        <p>A quick, simplified version of our calculator. Adjust the inputs to see indicative annual removals for a biochar facility.</p>
+      </div>
+
+      <div class="estimator reveal">
+        <form id="estimator-form" onsubmit="return false;" aria-label="Biochar removal estimator inputs">
+
+          <div class="est-field">
+            <label for="est-mass">Biochar produced (dry t/yr) <output id="est-mass-out" for="est-mass"></output></label>
+            <input type="range" id="est-mass" min="500" max="50000" step="500" value="10000">
+          </div>
+
+          <div class="est-field">
+            <label for="est-corg">Organic carbon content <output id="est-corg-out" for="est-corg"></output></label>
+            <input type="range" id="est-corg" min="50" max="90" step="1" value="75">
+            <p class="est-hint">Typical range for crop-residue biochar: 55–80%.</p>
+          </div>
+
+          <div class="est-field">
+            <label for="est-pf">Permanence factor <output id="est-pf-out" for="est-pf"></output></label>
+            <input type="range" id="est-pf" min="50" max="95" step="1" value="80">
+            <p class="est-hint">From VM0044 default tables, based on H:C<sub>org</sub> and soil temperature.</p>
+          </div>
+
+          <div class="est-field">
+            <label for="est-pe">Project emissions &amp; leakage <output id="est-pe-out" for="est-pe"></output></label>
+            <input type="range" id="est-pe" min="0" max="25" step="1" value="8">
+            <p class="est-hint">As a share of gross removals: transport, energy and process emissions.</p>
+          </div>
+
+        </form>
+
+        <div class="est-result" aria-live="polite">
+          <span class="est-unit" style="margin-bottom:0.25rem;">Estimated net removals</span>
+          <span class="est-big" id="est-net">0</span>
+          <span class="est-unit">tCO₂e per year</span>
+          <ul class="est-breakdown" role="list">
+            <li><span>Organic carbon in biochar</span><span id="est-c">0 tC</span></li>
+            <li><span>Stable carbon after PF</span><span id="est-stable">0 tC</span></li>
+            <li><span>Gross removals (× 44/12)</span><span id="est-gross">0 tCO₂e</span></li>
+            <li><span>Less emissions &amp; leakage</span><span id="est-deduct">0 tCO₂e</span></li>
+            <li><span>Removals per tonne biochar</span><span id="est-per-t">0 tCO₂e</span></li>
+          </ul>
+          <p class="est-disclaimer">Indicative only. Actual credits depend on measured data, site-specific permanence factors and VVB verification under the current version of VM0044.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER ===================== -->
+  <section class="cta-banner" aria-labelledby="cta-method-heading">
+    <div class="container cta-banner-inner">
+      <span class="label-tag">Partner With Us</span>
+      <h2 id="cta-method-heading" class="animated-gradient-text">Have Biomass? Let's Build a Project.</h2>
+      <p>Whether you hold agricultural residues, operate a pyrolysis unit, or want to source durable removals, our team can take you from feasibility to issuance.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-primary">Talk to Our Team</a>
+        <a href="projects.html" class="btn-secondary">See Our Projects →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Col 1: Brand -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo footer-logo" aria-label="NatWorks Transformation Home">
+            <img src="images/natworks-logo-light.png" alt="NatWorks Transformation" class="logo-img" width="639" height="285">
+            <div class="logo-text">
+              <span class="logo-name">NatWorks</span>
+              <span class="tagline">Transformation</span>
+            </div>
+          </a>
+          <p class="footer-desc">Developing certified biochar carbon dioxide removal projects that convert agricultural residues into permanent carbon sinks — advancing a net-zero future across Asia and Africa.</p>
+        </div>
+
+        <!-- Col 2: Biochar -->
+        <nav class="footer-col" aria-label="Biochar pages">
+          <h4>Biochar</h4>
+          <ul role="list">
+            <li><a href="biochar.html">What is Biochar</a></li>
+            <li><a href="biochar.html#pyrolysis">Science of Pyrolysis</a></li>
+            <li><a href="biochar.html#cobenefits">Co-Benefits</a></li>
+            <li><a href="methodology.html">Methodology &amp; Tools</a></li>
+          </ul>
+        </nav>
+
+        <!-- Col 3: Projects -->
+        <nav class="footer-col" aria-label="Projects pages">
+          <h4>Projects</h4>
+          <ul role="list">
+            <li><a href="projects.html">All Projects</a></li>
+            <li><a href="projects.html">Biochar CDR</a></li>
+            <li><a href="projects.html">Soil Carbon</a></li>
+            <li><a href="projects.html">Blue Carbon</a></li>
+          </ul>
+        </nav>
+
+        <!-- Col 4: Standards -->
+        <nav class="footer-col" aria-label="Carbon standards">
+          <h4>Standards</h4>
+          <ul role="list">
+            <li><a href="https://verra.org" target="_blank" rel="noopener">Verra VCS</a></li>
+            <li><a href="https://verra.org" target="_blank" rel="noopener">VM0044</a></li>
+            <li><a href="https://goldstandard.org" target="_blank" rel="noopener">Gold Standard</a></li>
+            <li><a href="projects.html">Afforestation</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 NatWorks Transformation. All rights reserved. | Advancing carbon removal for a net-zero future.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Biochar removal estimator
+    (function () {
+      var form = document.getElementById('estimator-form');
+      if (!form) return;
+
+      var fmt = function (n) { return Math.round(n).toLocaleString('en-US'); };
+      var $ = function (id) { return document.getElementById(id); };
+
+      function update() {
+        var mass = +$('est-mass').value;
+        var corg = +$('est-corg').value / 100;
+        var pf   = +$('est-pf').value / 100;
+        var pe   = +$('est-pe').value / 100;
+
+        var carbon = mass * corg;
+        var stable = carbon * pf;
+        var gross  = stable * 44 / 12;
+        var deduct = gross * pe;
+        var net    = gross - deduct;
+
+        $('est-mass-out').textContent = fmt(mass) + ' t';
+        $('est-corg-out').textContent = Math.round(corg * 100) + '%';
+        $('est-pf-out').textContent   = pf.toFixed(2);
+        $('est-pe-out').textContent   = Math.round(pe * 100) + '%';
+
+        $('est-c').textContent      = fmt(carbon) + ' tC';
+        $('est-stable').textContent = fmt(stable) + ' tC';
+        $('est-gross').textContent  = fmt(gross) + ' tCO₂e';
+        $('est-deduct').textContent = '−' + fmt(deduct) + ' tCO₂e';
+        $('est-per-t').textContent  = (net / mass).toFixed(2) + ' tCO₂e';
+        $('est-net').textContent    = fmt(net);
+      }
+
+      form.addEventListener('input', update);
+      update();
+    }());
+  </script>
+</body>
+</html>
